@@ -190,3 +190,4 @@ development activity derived from a legacy repository.
 - 2014-05-13T09:08:33+00:00 | Karl Bauer
 - 2014-05-26T20:19:35+00:00 | Karl Bauer
 - 2014-05-26T20:19:35+00:00 | Karl Bauer
+- 2014-06-02T15:05:27+00:00 | Karl Bauer
