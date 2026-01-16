@@ -587,12 +587,31 @@ namespace BAUERGROUP.Shared.Core.Logging
                     MinimumBreadcrumbLevel = _sentryMinimumBreadcrumbLevel,
                     MinimumEventLevel = _sentryMinimumEventLevel,
                     IncludeEventDataOnBreadcrumbs = true,
-                    Environment = _sentryEnvironment
+                    Environment = _sentryEnvironment,
+                    AttachStacktrace = true,
+                    SendDefaultPii = true
+                },
+                // User-Context für User-Tracking
+                User = new SentryNLogUser
+                {
+                    Username = "${windows-identity}",
+                    IpAddress = "{{auto}}"
                 }
             };
-            // Standard-Tags über NLog Layout-Parameter setzen
-            TargetErrorTracking.Tags.Add(new TargetPropertyWithContext("application", ApplicationName));
-            TargetErrorTracking.Tags.Add(new TargetPropertyWithContext("machine", "${machinename}"));
+
+            // Tags (indiziert, durchsuchbar in Sentry)
+            TargetErrorTracking.Tags.Add(new TargetPropertyWithContext("ApplicationName", ApplicationName));
+            TargetErrorTracking.Tags.Add(new TargetPropertyWithContext("MachineName", "${machinename}"));
+            TargetErrorTracking.Tags.Add(new TargetPropertyWithContext("ProcessName", "${processname:fullName=true}"));
+
+            // Context Properties (zusätzliche Daten, sichtbar im Event)
+            TargetErrorTracking.ContextProperties.Add(new TargetPropertyWithContext("AppDomain", "${appdomain}"));
+            TargetErrorTracking.ContextProperties.Add(new TargetPropertyWithContext("BaseDirectory", "${basedir}"));
+            TargetErrorTracking.ContextProperties.Add(new TargetPropertyWithContext("ProcessID", "${processid}"));
+            TargetErrorTracking.ContextProperties.Add(new TargetPropertyWithContext("ThreadName", "${threadname}"));
+            TargetErrorTracking.ContextProperties.Add(new TargetPropertyWithContext("ThreadID", "${threadid}"));
+            TargetErrorTracking.ContextProperties.Add(new TargetPropertyWithContext("Logger", "${logger}"));
+            TargetErrorTracking.ContextProperties.Add(new TargetPropertyWithContext("CallSite", "${callsite:includeNamespace=true}"));
         }
 
         private void InitalizeRules()
