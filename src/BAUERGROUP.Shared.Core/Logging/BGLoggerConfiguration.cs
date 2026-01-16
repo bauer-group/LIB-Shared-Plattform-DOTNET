@@ -556,14 +556,14 @@ namespace BAUERGROUP.Shared.Core.Logging
 
             TargetDebugger = new DebuggerTarget();
             TargetDebugger.Layout = TargetFile.Layout;
-
+            
             TargetLogReceiverService = new WebServiceTarget();
             TargetLogReceiverService.Name = "BGLogger Endpoint";
             TargetLogReceiverService.PreAuthenticate = true;
-            TargetLogReceiverService.Headers.Add(new MethodCallParameter("Authorization", Layout.FromString("Bearer YTBlMWEzZmYtZWM2Yy00NmJiLTg4ZjAtM2IxYWYyODg1MzY4"), typeof(String)));
+            TargetLogReceiverService.Headers.Add(new MethodCallParameter("Authorization", Layout.FromString("Bearer some_secure_bearrer_token_here"), typeof(String)));
             TargetLogReceiverService.Encoding = Encoding.UTF8;
             TargetLogReceiverService.Protocol = WebServiceProtocol.JsonPost;
-            TargetLogReceiverService.Url = new Uri("https://25005-010.solution.services.bauer-group.com/LogEntry");
+            TargetLogReceiverService.Url = new Uri("https://some.endpoint.com/Logs");
             TargetLogReceiverService.Parameters.Add(new MethodCallParameter("ApplicationName", Layout.FromString(ApplicationName), typeof(String)));
             TargetLogReceiverService.Parameters.Add(new MethodCallParameter("AppDomain", Layout.FromString("${appdomain}"), typeof(String)));
             TargetLogReceiverService.Parameters.Add(new MethodCallParameter("UserName", Layout.FromString("${windows-identity}"), typeof(String)));
