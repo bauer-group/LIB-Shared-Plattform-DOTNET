@@ -1,0 +1,267 @@
+# =============================================================================
+# BAUER GROUP Shared Platform - GIT Ignore Configuration
+# =============================================================================
+# This file specifies intentionally untracked files that GIT should ignore.
+# For more information: https://git-scm.com/docs/gitignore
+# =============================================================================
+
+# =============================================================================
+# BUILD OUTPUT
+# =============================================================================
+# Compiled binaries and build artifacts
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# MSBuild output directories
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]uild/
+[Oo]ut/
+
+# =============================================================================
+# VISUAL STUDIO
+# =============================================================================
+# User-specific Visual Studio files
+.vs/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Visual Studio cache/options directory
+.vs/**/DesignTimeBuild/
+.vs/**/ContentModel/
+.vs/**/.userprefs
+*.ide/
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# Visual Studio trace files
+*.e2e
+
+# Publish profiles (may contain sensitive deployment info)
+PublishScripts/
+*.pubxml
+!**/PublishProfiles/[Ff]older[Pp]rofile.pubxml
+
+# =============================================================================
+# VISUAL STUDIO CODE
+# =============================================================================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# =============================================================================
+# JETBRAINS RIDER / INTELLIJ
+# =============================================================================
+.idea/
+*.sln.iml
+
+# =============================================================================
+# NUGET PACKAGES
+# =============================================================================
+# NuGet packages directory (restored during build)
+[Pp]ackages/
+*.nupkg
+
+# NuGet Symbol packages
+*.snupkg
+
+# NuGet package cache
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# NuGet config files (may contain private feed credentials)
+# Uncomment if you use private feeds with credentials in nuget.config
+# nuget.config
+
+# =============================================================================
+# .NET CORE / .NET 5+ SPECIFIC
+# =============================================================================
+# Global packages folder
+!.packages/
+
+# Tool manifest
+# .config/dotnet-tools.json
+
+# Generated files
+*.AssemblyInfo.cs
+*.GeneratedMSBuildEditorConfig.editorconfig
+
+# Publish output
+publish/
+
+# =============================================================================
+# TEST RESULTS
+# =============================================================================
+# Test results and coverage reports
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+*.coveragexml
+coverage*/
+*.coverage
+*.coveragexml
+TestResult.xml
+
+# NCover
+_NCover*/
+
+# Coverlet
+coverage.json
+coverage.opencover.xml
+coverage.cobertura.xml
+
+# =============================================================================
+# CODE ANALYSIS
+# =============================================================================
+# StyleCop
+StyleCopReport.xml
+
+# CodeAnalysis
+*.CodeAnalysisLog.xml
+*.lastcodeanalysissucceeded
+
+# =============================================================================
+# RESHARPER
+# =============================================================================
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# =============================================================================
+# SECRETS & SENSITIVE DATA
+# =============================================================================
+# Local environment files (may contain API keys, connection strings)
+*.local
+*.local.json
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Application secrets
+secrets.json
+appsettings.Development.json
+appsettings.Local.json
+
+# Certificate files
+*.pfx
+*.p12
+*.cer
+!*.snk
+
+# =============================================================================
+# TEMPORARY FILES
+# =============================================================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~.nib
+
+# =============================================================================
+# LOGS & DEBUG FILES
+# =============================================================================
+*.log
+*.log.*
+nlog-*.log
+npm-debug.log*
+
+# Minidump files
+*.dmp
+*.mdmp
+
+# =============================================================================
+# DATABASE FILES
+# =============================================================================
+# SQL Server files
+*.mdf
+*.ldf
+*.ndf
+
+# SQLite
+*.db
+*.db3
+*.sqlite
+*.sqlite3
+
+# LiteDB (used in this project)
+*.litedb
+
+# =============================================================================
+# DOCUMENTATION GENERATION
+# =============================================================================
+# DocFX
+_site/
+api/
+docfx.log
+
+# =============================================================================
+# CEFSHARP / CHROMIUM
+# =============================================================================
+# CefSharp runtime files (large binaries, downloaded during build)
+# These are restored via NuGet and should not be committed
+libcef.dll
+chrome_elf.dll
+CefSharp*.dll
+CefSharp*.xml
+CefSharp*.pdb
+icudtl.dat
+natives_blob.bin
+snapshot_blob.bin
+v8_context_snapshot.bin
+cef.pak
+cef_*.pak
+devtools_resources.pak
+locales/
+
+# =============================================================================
+# STIMULSOFT (REPORTING)
+# =============================================================================
+# Stimulsoft temporary files
+*.mrt.bak
+Stimulsoft.*.xml
+
+# =============================================================================
+# PROJECT-SPECIFIC
+# =============================================================================
+# Local configuration overrides
+local.settings.json
+
+# Benchmark results
+BenchmarkDotNet.Artifacts/
+
+# =============================================================================
+# END OF FILE
+# =============================================================================
