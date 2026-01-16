@@ -15,6 +15,9 @@ namespace BAUERGROUP.Shared.Desktop.Reporting.Reporting;
 /// </summary>
 public class CommonReport : IDisposable
 {
+    private static bool _licenseApplied;
+    private static readonly Lock _licenseLock = new();
+
     /// <summary>
     /// Gets the underlying report.
     /// </summary>
@@ -30,25 +33,42 @@ public class CommonReport : IDisposable
     /// </summary>
     /// <param name="control">Optional control for context.</param>
     /// <param name="settings">Report settings.</param>
+    /// <exception cref="InvalidOperationException">Thrown when license has not been applied. Call <see cref="ApplyLicense"/> first.</exception>
     public CommonReport(Control? control = null, CommonReportSettings? settings = null)
     {
-        ApplyLicense();
+        if (!_licenseApplied)
+            throw new InvalidOperationException(
+                "Stimulsoft license has not been applied. Call CommonReport.ApplyLicense() at application startup.");
+
         Settings = settings ?? new CommonReportSettings();
         SetupReportBehaviour();
         Report = new StiReport();
         UpdateAssemblies();
     }
 
-    private void ApplyLicense()
+    /// <summary>
+    /// Applies the Stimulsoft license key. Must be called once at application startup.
+    /// </summary>
+    /// <param name="licenseKey">The Stimulsoft license key.</param>
+    /// <exception cref="ArgumentException">Thrown when licenseKey is null or empty.</exception>
+    public static void ApplyLicense(string licenseKey)
     {
-        Stimulsoft.Base.StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHnqkeggb/VhgQmKwOs4flbv5DZTaU+jqS5BybbTk1Fi06HsDc" +
-                                         "fRtqH1mCKYHwCQrbySRxk6h6AhdJ9UdaN/e1VyVrce2pxzRVIkcpjivDhAQMBRtkdpRj9LJCCJz8CeGoMbuL55zoyl" +
-                                         "sl1ZsDNyqwb3+wnZp3iQ577I9RsoAHkmVeDjDxWYJLi4ZPbDEBPPkCAvMD8KebAjihELEs/wU55U5DjxpERYh6r+Se" +
-                                         "YMGohZ7bl9r6jh6b3owmqRfJKn6rjK0OzHv257rk8rClNmExl97et8G/FjVz6lcCEu7sHbeMv/Iy61iMbQq7m0I0aY" +
-                                         "lDZO2kgiKudKc1vtMEndM3P6taPER+U+xsWhsT6+UhR688s196Wah0N1QOPd0ClqFOpbSLaAZn3dBHQWZnflPzc8hn" +
-                                         "9LU+gJI4OyjypMHA0jW8CT1Cy3NHzLKrWPGDmB305MLedT3cc9SSY1Y0fCSbOTNU/QszSJ9b7TQ8v1Wr8sgpukkn4E" +
-                                         "mVOp7INJkG6tzvL8Gt2fYIlNLhxqkz7f4uTt";
+        ArgumentException.ThrowIfNullOrWhiteSpace(licenseKey, nameof(licenseKey));
+
+        lock (_licenseLock)
+        {
+            if (_licenseApplied)
+                return;
+
+            Stimulsoft.Base.StiLicense.Key = licenseKey;
+            _licenseApplied = true;
+        }
     }
+
+    /// <summary>
+    /// Gets a value indicating whether the license has been applied.
+    /// </summary>
+    public static bool IsLicenseApplied => _licenseApplied;
 
     private void SetupReportBehaviour()
     {
