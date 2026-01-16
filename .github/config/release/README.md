@@ -48,15 +48,78 @@ Diese Dokumentation beschreibt die Semantic Release Konfiguration für automatis
 | **analyzeCommits** | `commit-analyzer` | Analysiert Commits, bestimmt Version-Bump |
 | **generateNotes** | `release-notes-generator` | Erstellt Release Notes aus Commits |
 | **prepare** | `changelog` | Aktualisiert CHANGELOG.md |
-| **prepare** | `semantic-release-dotnet` | Aktualisiert Version in .NET Dateien |
+| **prepare** | `semantic-release-dotnet` | Aktualisiert VersionPrefix in .NET Dateien |
 | **prepare** | `git` | Committed Änderungen ins Repository |
 | **publish** | `github` | Erstellt GitHub Release mit Tag |
 
+---
+
+## Entwickler-Anleitung: Workflow erweitern
+
+Der `modules-semantic-release.yml` Workflow aus `bauer-group/automation-templates` unterstützt zwei Methoden zur .NET-Versionierung.
+
+### Option 1: semantic-release-dotnet (empfohlen)
+
+Nutzt das dedizierte .NET Plugin - sauberer und wartbarer.
+
+**Workflow (`dotnet-release.yml`):**
+
+```yaml
+release:
+  uses: bauer-group/automation-templates/.github/workflows/modules-semantic-release.yml@main
+  with:
+    target-branch: "main"
+    extra-plugins: "semantic-release-dotnet"  # Plugin installieren
+  secrets: inherit
+```
+
+**Config (`semantic-release.json`):**
+
+```json
+["semantic-release-dotnet", {
+  "paths": ["Directory.Build.props"]
+}]
+```
+
+**Vorteile:**
+- Saubere Syntax
+- Unterstützt mehrere Dateien
+- Unterstützt Glob-Patterns (`src/**/*.csproj`)
+- Erkennt `<Version>` und `<VersionPrefix>` automatisch
+
+### Option 2: @semantic-release/exec (Fallback)
+
+Verwendet sed-Befehle - funktioniert ohne extra Plugins.
+
+**Workflow (`dotnet-release.yml`):**
+
+```yaml
+release:
+  uses: bauer-group/automation-templates/.github/workflows/modules-semantic-release.yml@main
+  with:
+    target-branch: "main"
+    # Kein extra-plugins nötig
+  secrets: inherit
+```
+
+**Config (`semantic-release.json`):**
+
+```json
+["@semantic-release/exec", {
+  "prepareCmd": "sed -i 's/<VersionPrefix>[^<]*</<VersionPrefix>${nextRelease.version}</g' Directory.Build.props"
+}]
+```
+
+**Vorteile:**
+- Immer verfügbar (Standard-Plugin)
+- Keine zusätzlichen Dependencies
+- Volle Kontrolle über den Befehl
+
+---
+
 ## Konfigurationsbeispiele
 
-### 1. Zentrale Versionierung (empfohlen)
-
-Für Projekte mit `Directory.Build.props` als zentraler Versionsverwaltung:
+### 1. Zentrale Versionierung mit Directory.Build.props
 
 ```json
 ["semantic-release-dotnet", {
@@ -65,6 +128,7 @@ Für Projekte mit `Directory.Build.props` als zentraler Versionsverwaltung:
 ```
 
 **Directory.Build.props:**
+
 ```xml
 <PropertyGroup>
   <VersionPrefix>1.0.0</VersionPrefix>
@@ -73,31 +137,24 @@ Für Projekte mit `Directory.Build.props` als zentraler Versionsverwaltung:
 
 ### 2. Einzelne Projekte
 
-Für Projekte ohne zentrale `Directory.Build.props`:
-
 ```json
 ["semantic-release-dotnet", {
-  "paths": [
-    "src/MyProject/MyProject.csproj"
-  ]
+  "paths": ["src/MyProject/MyProject.csproj"]
 }]
 ```
 
-### 3. Mehrere unabhängige Projekte
+### 3. Mehrere Projekte
 
 ```json
 ["semantic-release-dotnet", {
   "paths": [
     "src/ProjectA/ProjectA.csproj",
-    "src/ProjectB/ProjectB.csproj",
-    "src/ProjectC/ProjectC.csproj"
+    "src/ProjectB/ProjectB.csproj"
   ]
 }]
 ```
 
 ### 4. Glob-Pattern
-
-Alle `.csproj` Dateien automatisch finden:
 
 ```json
 ["semantic-release-dotnet", {
@@ -107,14 +164,20 @@ Alle `.csproj` Dateien automatisch finden:
 
 ### 5. Gemischter Ansatz
 
-Zentrale Props + einzelne Projekte:
-
 ```json
 ["semantic-release-dotnet", {
   "paths": [
     "Directory.Build.props",
     "tools/StandaloneApp/StandaloneApp.csproj"
   ]
+}]
+```
+
+### 6. Mit @semantic-release/exec (Alternative)
+
+```json
+["@semantic-release/exec", {
+  "prepareCmd": "sed -i 's|<VersionPrefix>.*</VersionPrefix>|<VersionPrefix>${nextRelease.version}</VersionPrefix>|g' Directory.Build.props"
 }]
 ```
 
@@ -199,6 +262,7 @@ release:
   with:
     target-branch: 'main'
     force-release: false
+    extra-plugins: 'semantic-release-dotnet'  # Für .NET Versionierung
   secrets: inherit
 ```
 

@@ -83,6 +83,7 @@ jobs:
     with:
       target-branch: "main"
       force-release: ${{ inputs.force-release || false }}
+      extra-plugins: "semantic-release-dotnet"
     secrets: inherit
 
   # ============================================
