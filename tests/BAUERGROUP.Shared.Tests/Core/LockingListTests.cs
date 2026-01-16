@@ -2,13 +2,18 @@ using BAUERGROUP.Shared.Core.Utilities;
 
 namespace BAUERGROUP.Shared.Tests.Core;
 
+public class TestItem
+{
+    public string Value { get; set; } = string.Empty;
+}
+
 public class LockingListTests : IDisposable
 {
-    private readonly LockingList<string> _sut;
+    private readonly LockingList<TestItem> _sut;
 
     public LockingListTests()
     {
-        _sut = new LockingList<string>("TestCache");
+        _sut = new LockingList<TestItem>("TestCache");
     }
 
     public void Dispose()
@@ -19,32 +24,33 @@ public class LockingListTests : IDisposable
     [Fact]
     public void Add_NewItem_ReturnsTrue()
     {
-        var result = _sut.Add("key1", "value1", TimeSpan.FromMinutes(5));
+        var result = _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
         result.Should().BeTrue();
     }
 
     [Fact]
     public void Add_DuplicateKey_WithoutOverwrite_ReturnsFalse()
     {
-        _sut.Add("key1", "value1", TimeSpan.FromMinutes(5));
-        var result = _sut.Add("key1", "value2", TimeSpan.FromMinutes(5), bOverwrite: false);
+        _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
+        var result = _sut.Add("key1", new TestItem { Value = "value2" }, TimeSpan.FromMinutes(5), bOverwrite: false);
         result.Should().BeFalse();
     }
 
     [Fact]
     public void Add_DuplicateKey_WithOverwrite_ReturnsTrue()
     {
-        _sut.Add("key1", "value1", TimeSpan.FromMinutes(5));
-        var result = _sut.Add("key1", "value2", TimeSpan.FromMinutes(5), bOverwrite: true);
+        _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
+        var result = _sut.Add("key1", new TestItem { Value = "value2" }, TimeSpan.FromMinutes(5), bOverwrite: true);
         result.Should().BeTrue();
     }
 
     [Fact]
     public void Get_ExistingKey_ReturnsValue()
     {
-        _sut.Add("key1", "value1", TimeSpan.FromMinutes(5));
+        _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
         var result = _sut.Get("key1");
-        result.Should().Be("value1");
+        result.Should().NotBeNull();
+        result.Value.Should().Be("value1");
     }
 
     [Fact]
@@ -57,7 +63,7 @@ public class LockingListTests : IDisposable
     [Fact]
     public void IsExists_ExistingKey_ReturnsTrue()
     {
-        _sut.Add("key1", "value1", TimeSpan.FromMinutes(5));
+        _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
         var result = _sut.IsExists("key1");
         result.Should().BeTrue();
     }
@@ -72,9 +78,10 @@ public class LockingListTests : IDisposable
     [Fact]
     public void Remove_ExistingKey_ReturnsValue()
     {
-        _sut.Add("key1", "value1", TimeSpan.FromMinutes(5));
+        _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
         var result = _sut.Remove("key1");
-        result.Should().Be("value1");
+        result.Should().NotBeNull();
+        result.Value.Should().Be("value1");
     }
 
     [Fact]
@@ -87,8 +94,8 @@ public class LockingListTests : IDisposable
     [Fact]
     public void Remove_DecreasesCount()
     {
-        _sut.Add("key1", "value1", TimeSpan.FromMinutes(5));
-        _sut.Add("key2", "value2", TimeSpan.FromMinutes(5));
+        _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
+        _sut.Add("key2", new TestItem { Value = "value2" }, TimeSpan.FromMinutes(5));
         _sut.Remove("key1");
         _sut.Count.Should().Be(1);
     }
@@ -96,9 +103,9 @@ public class LockingListTests : IDisposable
     [Fact]
     public void Count_ReturnsCorrectCount()
     {
-        _sut.Add("key1", "value1", TimeSpan.FromMinutes(5));
-        _sut.Add("key2", "value2", TimeSpan.FromMinutes(5));
-        _sut.Add("key3", "value3", TimeSpan.FromMinutes(5));
+        _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
+        _sut.Add("key2", new TestItem { Value = "value2" }, TimeSpan.FromMinutes(5));
+        _sut.Add("key3", new TestItem { Value = "value3" }, TimeSpan.FromMinutes(5));
 
         _sut.Count.Should().Be(3);
     }
@@ -109,7 +116,7 @@ public class LockingListTests : IDisposable
         var eventFired = false;
         _sut.Updated += (s, e) => eventFired = true;
 
-        _sut.Add("key1", "value1", TimeSpan.FromMinutes(5));
+        _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
 
         eventFired.Should().BeTrue();
     }
@@ -117,7 +124,7 @@ public class LockingListTests : IDisposable
     [Fact]
     public void Updated_Event_FiresOnRemove()
     {
-        _sut.Add("key1", "value1", TimeSpan.FromMinutes(5));
+        _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
 
         var eventFired = false;
         _sut.Updated += (s, e) => eventFired = true;
