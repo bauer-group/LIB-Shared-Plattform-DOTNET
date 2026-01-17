@@ -14,7 +14,7 @@ namespace BAUERGROUP.Shared.Core.Logging
     {
         private CancellationTokenSource _cts;
 
-        public BGLoggerNetworkListener(Boolean bAutomaticEnableSenderOnLocalHost = false, IPAddress? oAddress = null, UInt16 uPort = 0)
+        public BGLoggerNetworkListener(Boolean automaticEnableSenderOnLocalHost = false, IPAddress? address = null, UInt16 port = 0)
         {
             _cts = new CancellationTokenSource();
 
@@ -22,8 +22,8 @@ namespace BAUERGROUP.Shared.Core.Logging
             {
                 try
                 {
-                    UdpClient client = new UdpClient(uPort == 0 ? BGLoggerConfiguration.DefaultNetworkPort : uPort);
-                    IPEndPoint endpoint = new IPEndPoint(oAddress == null ? IPAddress.Loopback : oAddress, uPort == 0 ? BGLoggerConfiguration.DefaultNLogViewerPort : uPort);
+                    UdpClient client = new UdpClient(port == 0 ? BGLoggerConfiguration.DefaultNetworkPort : port);
+                    IPEndPoint endpoint = new IPEndPoint(address == null ? IPAddress.Loopback : address, port == 0 ? BGLoggerConfiguration.DefaultNLogViewerPort : port);
 
                     while (!_cts.IsCancellationRequested)
                     {
@@ -40,7 +40,7 @@ namespace BAUERGROUP.Shared.Core.Logging
                 }
             }, _cts.Token);
 
-            if (bAutomaticEnableSenderOnLocalHost == true)
+            if (automaticEnableSenderOnLocalHost == true)
                 BGLogger.Configuration.Network = true;
         }
 

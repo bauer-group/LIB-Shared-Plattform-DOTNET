@@ -12,14 +12,14 @@ namespace BAUERGROUP.Shared.Cloud.FixerIO
 
         }
 
-        public FixerIOClientException(String sMessage)
-            : base(sMessage)
+        public FixerIOClientException(String message)
+            : base(message)
         {
 
         }
 
-        public FixerIOClientException(String sMessage, Exception eInnerException)
-            : base(sMessage, eInnerException)
+        public FixerIOClientException(String message, Exception innerException)
+            : base(message, innerException)
         {
 
         }

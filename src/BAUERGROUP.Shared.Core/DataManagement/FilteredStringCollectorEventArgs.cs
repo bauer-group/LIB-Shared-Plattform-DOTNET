@@ -6,10 +6,10 @@ namespace BAUERGROUP.Shared.Core.DataManagement
 {
     public class FilteredStringCollectorEventArgs : EventArgs
     {
-        public FilteredStringCollectorEventArgs(String sEntry, Boolean bMatch)
+        public FilteredStringCollectorEventArgs(String entry, Boolean match)
         {
-            Entry = sEntry;
-            Match = bMatch;
+            Entry = entry;
+            Match = match;
         }
 
         public String Entry { get; set; }

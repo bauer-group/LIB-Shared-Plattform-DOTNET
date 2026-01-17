@@ -15,23 +15,23 @@ namespace BAUERGROUP.Shared.Core.Files
 
         public String JobFileFilter { get; private set; }
 
-        public FileProcessing(String sJobDirectory, String sJobFileFilter)
+        public FileProcessing(String jobDirectory, String jobFileFilter)
         {
-            if (sJobDirectory == null)
-                throw new FileProcessingException("FileProcessing() -> Argument sJobDirectory cannot be NULL.", new ArgumentNullException("sDirectory cannot be NULL."));
+            if (jobDirectory == null)
+                throw new FileProcessingException("FileProcessing() -> Argument jobDirectory cannot be NULL.", new ArgumentNullException("jobDirectory cannot be NULL."));
 
-            if (sJobFileFilter == null)
-                throw new FileProcessingException("FileProcessing() -> Argument sJobFileFilter cannot be NULL.", new ArgumentNullException("sJobFileFilter cannot be NULL."));
+            if (jobFileFilter == null)
+                throw new FileProcessingException("FileProcessing() -> Argument jobFileFilter cannot be NULL.", new ArgumentNullException("jobFileFilter cannot be NULL."));
 
-            JobDirectory = sJobDirectory;
-            JobFileFilter = sJobFileFilter;
+            JobDirectory = jobDirectory;
+            JobFileFilter = jobFileFilter;
 
             JobDirectory_Processed = Path.Combine(JobDirectory, @"Verarbeitet");
             JobDirectory_Unprocessed = Path.Combine(JobDirectory, @"Unverarbeitet");
 
             if (!Directory.Exists(JobDirectory))
                 throw new FileProcessingException($"Folder '{JobDirectory}' does not exists.", new ArgumentException($"Folder '{JobDirectory}' does not exists."));
-            
+
             if (!Directory.Exists(JobDirectory_Processed))
                 Directory.CreateDirectory(JobDirectory_Processed);
 
@@ -52,27 +52,27 @@ namespace BAUERGROUP.Shared.Core.Files
             return GetFiles().Length;
         }
 
-        public void MoveFile(String sFile, FileProcessingStatus eStatus = FileProcessingStatus.Processed, Boolean bMoveConnectedFiles = true)
+        public void MoveFile(String file, FileProcessingStatus status = FileProcessingStatus.Processed, Boolean moveConnectedFiles = true)
         {
-            var sTargetFolder = eStatus == FileProcessingStatus.Processed ? JobDirectory_Processed : JobDirectory_Unprocessed;
+            var targetFolder = status == FileProcessingStatus.Processed ? JobDirectory_Processed : JobDirectory_Unprocessed;
 
             //Move primary File
-            if (File.Exists(sFile))
-                File.Move(sFile, Path.Combine(sTargetFolder, Path.GetFileName(GetTargetFilename(sFile))));
+            if (File.Exists(file))
+                File.Move(file, Path.Combine(targetFolder, Path.GetFileName(GetTargetFilename(file))));
 
             //Move connected Files
-            if (bMoveConnectedFiles)
+            if (moveConnectedFiles)
             {
-                var sConnectedFiles = Directory.GetFiles(JobDirectory, $"{Path.GetFileNameWithoutExtension(sFile)}.*", SearchOption.TopDirectoryOnly);
-                foreach (var sConnectedFile in sConnectedFiles)
-                    File.Move(sConnectedFile, Path.Combine(sTargetFolder, Path.GetFileName(GetTargetFilename(sConnectedFile))));
+                var connectedFiles = Directory.GetFiles(JobDirectory, $"{Path.GetFileNameWithoutExtension(file)}.*", SearchOption.TopDirectoryOnly);
+                foreach (var connectedFile in connectedFiles)
+                    File.Move(connectedFile, Path.Combine(targetFolder, Path.GetFileName(GetTargetFilename(connectedFile))));
             }
         }
 
-        private string GetTargetFilename(string sSourceFilename)
+        private string GetTargetFilename(string sourceFilename)
         {
-            var directory = Path.GetDirectoryName(sSourceFilename) ?? string.Empty;
-            return Path.Combine(directory, String.Format("[{0:yyyy-MM-dd HHmmss}] {1}", DateTime.Now, Path.GetFileName(sSourceFilename)));
+            var directory = Path.GetDirectoryName(sourceFilename) ?? string.Empty;
+            return Path.Combine(directory, String.Format("[{0:yyyy-MM-dd HHmmss}] {1}", DateTime.Now, Path.GetFileName(sourceFilename)));
         }
     }
 }

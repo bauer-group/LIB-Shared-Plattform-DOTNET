@@ -14,14 +14,14 @@ namespace BAUERGROUP.Shared.Desktop.Exceptions
 
         }
 
-        public ChromeException(String sMessage)
-            : base(sMessage)
+        public ChromeException(String message)
+            : base(message)
         {
 
         }
 
-        public ChromeException(String sMessage, Exception oInnerException)
-            : base(sMessage, oInnerException)
+        public ChromeException(String message, Exception innerException)
+            : base(message, innerException)
         {
 
         }

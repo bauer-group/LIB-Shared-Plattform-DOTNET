@@ -7,9 +7,9 @@ namespace BAUERGROUP.Shared.Cloud.CloudinaryClient
 {
     public static class CloudinaryExtensions
     {
-        public static String GetURL(this Resource oRessource)
+        public static String GetURL(this Resource resource)
         {
-            return oRessource.Url.AbsoluteUri;
+            return resource.Url.AbsoluteUri;
         }
     }
 }

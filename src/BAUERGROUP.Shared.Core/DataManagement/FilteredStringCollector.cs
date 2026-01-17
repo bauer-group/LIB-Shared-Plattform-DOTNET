@@ -12,24 +12,24 @@ namespace BAUERGROUP.Shared.Core.DataManagement
 
         private String? FilterRegExPattern { get; set; }
 
-        public FilteredStringCollector(String? sFilterRegEx = null)
+        public FilteredStringCollector(String? filterRegEx = null)
         {
             _RecordsRead = new HashSet<String>();
-            FilterRegExPattern = sFilterRegEx;
+            FilterRegExPattern = filterRegEx;
         }
 
-        public Boolean Add(String sEntry)
+        public Boolean Add(String entry)
         {
             //Check for Empty Data
-            if (String.IsNullOrWhiteSpace(sEntry))
+            if (String.IsNullOrWhiteSpace(entry))
                 return false;
 
             //Do Processing of Data
-            _RecordsRead.Add(sEntry);
+            _RecordsRead.Add(entry);
 
             //Fire Event
-            var bIsMatch = FilterRegExPattern == null ? true : Regex.IsMatch(sEntry, FilterRegExPattern);
-            OnRecordAdded(sEntry, bIsMatch);
+            var isMatch = FilterRegExPattern == null ? true : Regex.IsMatch(entry, FilterRegExPattern);
+            OnRecordAdded(entry, isMatch);
 
             return true;
         }
@@ -44,9 +44,9 @@ namespace BAUERGROUP.Shared.Core.DataManagement
         public String? FirstMatchingRecord => MatchingRecords.FirstOrDefault();
         public String? LastMatchingRecord => MatchingRecords.LastOrDefault();
 
-        public Boolean Contains(String sEntry)
+        public Boolean Contains(String entry)
         {
-            return _RecordsRead.Contains(sEntry);
+            return _RecordsRead.Contains(entry);
         }
 
         public void Clear()
@@ -59,6 +59,6 @@ namespace BAUERGROUP.Shared.Core.DataManagement
 
         protected void OnRecordAdded(FilteredStringCollectorEventArgs eventArgs) => RecordAdded?.Invoke(this, eventArgs);
 
-        protected void OnRecordAdded(String sEntry, Boolean bMatch) => RecordAdded?.Invoke(this, new FilteredStringCollectorEventArgs(sEntry, bMatch));
+        protected void OnRecordAdded(String entry, Boolean match) => RecordAdded?.Invoke(this, new FilteredStringCollectorEventArgs(entry, match));
     }
 }

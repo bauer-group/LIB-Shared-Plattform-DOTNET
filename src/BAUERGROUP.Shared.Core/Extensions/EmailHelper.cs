@@ -7,14 +7,14 @@ namespace BAUERGROUP.Shared.Core.Extensions
 {
     public static class EmailHelper
     {
-        public static Boolean IsEmailAddressValid(this String sEmail)
+        public static Boolean IsEmailAddressValid(this String email)
         {
-            if (String.IsNullOrWhiteSpace(sEmail))
+            if (String.IsNullOrWhiteSpace(email))
                 return false;
 
             try
             {
-                new MailAddress(sEmail);
+                new MailAddress(email);
                 return true;
             }
             catch (FormatException)

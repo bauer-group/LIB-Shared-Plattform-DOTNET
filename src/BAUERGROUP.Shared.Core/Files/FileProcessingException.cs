@@ -12,14 +12,14 @@ namespace BAUERGROUP.Shared.Core.Files
 
         }
 
-        public FileProcessingException(String sMessage) :
-            base(sMessage)
+        public FileProcessingException(String message) :
+            base(message)
         {
 
         }
 
-        public FileProcessingException(String sMessage, Exception eInnerException) :
-            base(sMessage, eInnerException)
+        public FileProcessingException(String message, Exception innerException) :
+            base(message, innerException)
         {
 
         }

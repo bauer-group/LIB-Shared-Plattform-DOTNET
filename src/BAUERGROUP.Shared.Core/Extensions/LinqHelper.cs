@@ -10,34 +10,34 @@ namespace BAUERGROUP.Shared.Core.Extensions
 {
     public static class LinqHelper
     {
-        public static string XMLString(this XElement oElement)
+        public static string XMLString(this XElement element)
         {
-            if (oElement == null)
+            if (element == null)
                 return @"";
 
-            return oElement.Value;
+            return element.Value;
         }
 
-        public static Decimal XMLDecimal(this XElement oElement)
+        public static Decimal XMLDecimal(this XElement element)
         {
-            if (oElement == null)
+            if (element == null)
                 return 0m;
 
-            return Convert.ToDecimal(oElement.Value);
+            return Convert.ToDecimal(element.Value);
         }
 
-        public static String PropertyName<T>(this Expression<Func<T, Object>> oField)
+        public static String PropertyName<T>(this Expression<Func<T, Object>> field)
         {
-            var oLamda = (LambdaExpression)oField;
-            if (oLamda.Body is UnaryExpression)
+            var lambda = (LambdaExpression)field;
+            if (lambda.Body is UnaryExpression)
             {
-                var ue = (UnaryExpression)(oLamda.Body);
+                var ue = (UnaryExpression)(lambda.Body);
                 var me = (MemberExpression)(ue.Operand);
                 return ((PropertyInfo)me.Member).Name;
             }
             else
             {
-                var me = (MemberExpression)(oLamda.Body);
+                var me = (MemberExpression)(lambda.Body);
                 return ((PropertyInfo)me.Member).Name;
             }
         }

@@ -11,116 +11,116 @@ namespace BAUERGROUP.Shared.Core.Extensions
         /// <summary>
         /// Execute's an async Task method which has a void return value synchronously.
         /// </summary>
-        /// <param name="oTask">Task method to execute.</param>
-        public static void RunSync(Func<Task> oTask)
+        /// <param name="task">Task method to execute.</param>
+        public static void RunSync(Func<Task> task)
         {
-            var oExistingContext = SynchronizationContext.Current;
-            var oExclusiveSynchronisation = new ExclusiveSynchronizationContext();
-            SynchronizationContext.SetSynchronizationContext(oExclusiveSynchronisation);
+            var existingContext = SynchronizationContext.Current;
+            var exclusiveSynchronisation = new ExclusiveSynchronizationContext();
+            SynchronizationContext.SetSynchronizationContext(exclusiveSynchronisation);
 
-            oExclusiveSynchronisation.Post(async _ =>
+            exclusiveSynchronisation.Post(async _ =>
             {
                 try
                 {
-                    await oTask();
+                    await task();
                 }
                 catch (Exception e)
                 {
-                    oExclusiveSynchronisation.InnerException = e;
+                    exclusiveSynchronisation.InnerException = e;
                     throw;
                 }
                 finally
                 {
-                    oExclusiveSynchronisation.EndMessageLoop();
+                    exclusiveSynchronisation.EndMessageLoop();
                 }
             }, null);
 
-            oExclusiveSynchronisation.BeginMessageLoop();
+            exclusiveSynchronisation.BeginMessageLoop();
 
-            SynchronizationContext.SetSynchronizationContext(oExistingContext);
+            SynchronizationContext.SetSynchronizationContext(existingContext);
         }
 
         /// <summary>
         /// Execute's an async Task method which has a T return type synchronously.
         /// </summary>
         /// <typeparam name="T">Return Type.</typeparam>
-        /// <param name="oTask">Task method to execute.</param>
+        /// <param name="task">Task method to execute.</param>
         /// <returns>The result of the task.</returns>
-        public static T? RunSync<T>(Func<Task<T>> oTask)
+        public static T? RunSync<T>(Func<Task<T>> task)
         {
-            var oExistingContext = SynchronizationContext.Current;
-            var oExclusiveSynchronisation = new ExclusiveSynchronizationContext();
-            SynchronizationContext.SetSynchronizationContext(oExclusiveSynchronisation);
+            var existingContext = SynchronizationContext.Current;
+            var exclusiveSynchronisation = new ExclusiveSynchronizationContext();
+            SynchronizationContext.SetSynchronizationContext(exclusiveSynchronisation);
 
-            T? oReturn = default;
-            oExclusiveSynchronisation.Post(async _ =>
+            T? returnValue = default;
+            exclusiveSynchronisation.Post(async _ =>
             {
                 try
                 {
-                    oReturn = await oTask();
+                    returnValue = await task();
                 }
                 catch (Exception e)
                 {
-                    oExclusiveSynchronisation.InnerException = e;
+                    exclusiveSynchronisation.InnerException = e;
                     throw;
                 }
                 finally
                 {
-                    oExclusiveSynchronisation.EndMessageLoop();
+                    exclusiveSynchronisation.EndMessageLoop();
                 }
             }, null);
 
-            oExclusiveSynchronisation.BeginMessageLoop();
+            exclusiveSynchronisation.BeginMessageLoop();
 
-            SynchronizationContext.SetSynchronizationContext(oExistingContext);
+            SynchronizationContext.SetSynchronizationContext(existingContext);
 
-            return oReturn;
+            return returnValue;
         }
 
         private class ExclusiveSynchronizationContext : SynchronizationContext
         {
-            private Boolean bCompleted;
+            private Boolean completed;
             public Exception? InnerException { get; set; }
-            readonly AutoResetEvent oWorkItemsWaiting = new AutoResetEvent(false);
-            readonly Queue<Tuple<SendOrPostCallback, object?>> oItems = new Queue<Tuple<SendOrPostCallback, object?>>();
+            readonly AutoResetEvent workItemsWaiting = new AutoResetEvent(false);
+            readonly Queue<Tuple<SendOrPostCallback, object?>> items = new Queue<Tuple<SendOrPostCallback, object?>>();
 
-            public override void Send(SendOrPostCallback oPostCallback, Object? oState)
+            public override void Send(SendOrPostCallback postCallback, Object? state)
             {
                 throw new NotSupportedException("Unable to send on same Thread.");
             }
 
-            public override void Post(SendOrPostCallback oPostCallback, Object? oState)
+            public override void Post(SendOrPostCallback postCallback, Object? state)
             {
-                lock (oItems)
+                lock (items)
                 {
-                    oItems.Enqueue(Tuple.Create(oPostCallback, oState));
+                    items.Enqueue(Tuple.Create(postCallback, state));
                 }
 
-                oWorkItemsWaiting.Set();
+                workItemsWaiting.Set();
             }
 
             public void EndMessageLoop()
             {
-                Post(_ => bCompleted = true, null);
+                Post(_ => completed = true, null);
             }
 
             public void BeginMessageLoop()
             {
-                while (!bCompleted)
+                while (!completed)
                 {
-                    Tuple<SendOrPostCallback, object?>? oTask = null;
+                    Tuple<SendOrPostCallback, object?>? currentTask = null;
 
-                    lock (oItems)
+                    lock (items)
                     {
-                        if (oItems.Count > 0)
+                        if (items.Count > 0)
                         {
-                            oTask = oItems.Dequeue();
+                            currentTask = items.Dequeue();
                         }
                     }
 
-                    if (oTask != null)
+                    if (currentTask != null)
                     {
-                        oTask.Item1(oTask.Item2);
+                        currentTask.Item1(currentTask.Item2);
 
                         if (InnerException != null)
                         {
@@ -129,7 +129,7 @@ namespace BAUERGROUP.Shared.Core.Extensions
                     }
                     else
                     {
-                        oWorkItemsWaiting.WaitOne();
+                        workItemsWaiting.WaitOne();
                     }
                 }
             }

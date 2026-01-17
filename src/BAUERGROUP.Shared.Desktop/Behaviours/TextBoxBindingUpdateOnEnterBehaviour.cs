@@ -21,12 +21,12 @@ namespace BAUERGROUP.Shared.Desktop.Behaviours
             AssociatedObject.KeyUp -= OnTextBoxKeyUp;
         }
 
-        private void OnTextBoxKeyUp(Object oSender, System.Windows.Input.KeyEventArgs oArguments)
+        private void OnTextBoxKeyUp(Object sender, System.Windows.Input.KeyEventArgs arguments)
         {
-            if (oArguments.Key == Key.Enter)
+            if (arguments.Key == Key.Enter)
             {
-                var oTextBox = oSender as WpfTextBox;
-                oTextBox?.GetBindingExpression(WpfTextBox.TextProperty)?.UpdateSource();
+                var textBox = sender as WpfTextBox;
+                textBox?.GetBindingExpression(WpfTextBox.TextProperty)?.UpdateSource();
             }
         }
     }

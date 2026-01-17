@@ -89,9 +89,9 @@ namespace BAUERGROUP.Shared.Core.Application
         {
             get
             {
-                var sDataFolderControl = EnvironmentProperties.GetEnvironmentVariable(ForceApplicationDataFolderInUserProfileEnvironmentVariable);
+                var dataFolderControl = EnvironmentProperties.GetEnvironmentVariable(ForceApplicationDataFolderInUserProfileEnvironmentVariable);
 
-                if (!String.IsNullOrEmpty(sDataFolderControl) && sDataFolderControl?.ToUpper() == "TRUE")
+                if (!String.IsNullOrEmpty(dataFolderControl) && dataFolderControl?.ToUpper() == "TRUE")
                     return ExecutionApplicationDataFolder; //Variable for Storing Configuration in Users Roaming Profile is present
 
                 return ExecutionCommonApplicationDataFolder; //Variable for Storing Configuration in Users Roaming Profile is absent

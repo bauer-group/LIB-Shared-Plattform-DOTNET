@@ -16,9 +16,9 @@ namespace BAUERGROUP.Shared.Core.Files
             ZIP = new ZipInputStream(streamZIPFile);         
         }
 
-        public ZIPFileUtils(Uri oURL) :
-            this(DownloadUtils.DownloadContentToStream(oURL.AbsoluteUri))
-        {            
+        public ZIPFileUtils(Uri url) :
+            this(DownloadUtils.DownloadContentToStream(url.AbsoluteUri))
+        {
 
         }
 

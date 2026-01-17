@@ -23,13 +23,13 @@ namespace BAUERGROUP.Shared.Desktop.Logging
             Initialize();
         }
 
-        public LogMessageReceiver(String? sTitle)
+        public LogMessageReceiver(String? title)
             : this()
         {
-            if (sTitle == null)
+            if (title == null)
                 return;
 
-            this.Title = sTitle;
+            this.Title = title;
         }
 
         private void Initialize()

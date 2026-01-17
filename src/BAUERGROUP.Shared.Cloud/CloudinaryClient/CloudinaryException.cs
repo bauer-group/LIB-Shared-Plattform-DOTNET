@@ -13,34 +13,34 @@ namespace BAUERGROUP.Shared.Cloud.CloudinaryClient
             StatusCode = HttpStatusCode.InternalServerError;
         }
 
-        public CloudinaryException(String sMessage)
-            : base(sMessage)
+        public CloudinaryException(String message)
+            : base(message)
         {
             StatusCode = HttpStatusCode.InternalServerError;
         }
 
-        public CloudinaryException(String sMessage, Exception eInnerException)
-            : base(sMessage, eInnerException)
+        public CloudinaryException(String message, Exception innerException)
+            : base(message, innerException)
         {
 
         }
 
-        public CloudinaryException(HttpStatusCode eStatusCode, String sMessage)
-            : base(sMessage)
+        public CloudinaryException(HttpStatusCode statusCode, String message)
+            : base(message)
         {
-            StatusCode = eStatusCode;
+            StatusCode = statusCode;
         }
 
-        public CloudinaryException(HttpStatusCode eStatusCode)
+        public CloudinaryException(HttpStatusCode statusCode)
             : base()
         {
-            StatusCode = eStatusCode;
+            StatusCode = statusCode;
         }
 
-        public CloudinaryException(HttpStatusCode eStatusCode, String sMessage, Exception eInnerException)
-            : base(sMessage, eInnerException)
+        public CloudinaryException(HttpStatusCode statusCode, String message, Exception innerException)
+            : base(message, innerException)
         {
-            StatusCode = eStatusCode;
+            StatusCode = statusCode;
         }
 
         public HttpStatusCode StatusCode { get; set; }
