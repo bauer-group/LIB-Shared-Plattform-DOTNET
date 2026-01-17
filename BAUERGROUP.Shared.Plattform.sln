@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAUERGROUP.Shared.Desktop.R
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAUERGROUP.Shared.Tests", "tests\BAUERGROUP.Shared.Tests\BAUERGROUP.Shared.Tests.csproj", "{A241FEF2-6F20-4B57-88F7-B8450984EDC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAUERGROUP.Shared.Plattform.Test", "tests\BAUERGROUP.Shared.Plattform.Test\BAUERGROUP.Shared.Plattform.Test.csproj", "{A241FEF2-6F20-4B57-88F7-B8450984EDC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

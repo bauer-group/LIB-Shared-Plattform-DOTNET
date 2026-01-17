@@ -24,6 +24,13 @@ namespace BAUERGROUP.Shared.Core.Logging
             if (String.IsNullOrWhiteSpace(GlobalDiagnosticsContext.Get("ApplicationName")))
                 ApplicationName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
 
+            // Initialize LogDirectory with default value if not already set
+            if (String.IsNullOrWhiteSpace(GlobalDiagnosticsContext.Get("LogDirectory")))
+                LogDirectory = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                    ApplicationName,
+                    "Logging");
+
             //Instances
             InitalizeTargets();
             InitalizeRules();
@@ -70,6 +77,22 @@ namespace BAUERGROUP.Shared.Core.Logging
             set
             {
                 GlobalDiagnosticsContext.Set("ApplicationName", value);
+            }
+        }
+
+        /// <summary>
+        /// Log directory path. If not set, defaults to %ProgramData%\{ApplicationName}\Logging
+        /// </summary>
+        public static String LogDirectory
+        {
+            get
+            {
+                return GlobalDiagnosticsContext.Get("LogDirectory");
+            }
+
+            set
+            {
+                GlobalDiagnosticsContext.Set("LogDirectory", value);
             }
         }
 
@@ -516,10 +539,10 @@ namespace BAUERGROUP.Shared.Core.Logging
 
             TargetFile = new FileTarget();
             TargetFile.Layout = @"${longdate::universalTime=true} - ${level:uppercase=true}: ${message}${onexception:${newline}EXCEPTION DETAILS\:${newline}${exception:format=ToString}}";
-            TargetFile.FileName = @"${specialfolder:CommonApplicationData}\${gdc:item=ApplicationName}\Logging\${gdc:item=ApplicationName}.log";
+            TargetFile.FileName = @"${gdc:item=LogDirectory}\${gdc:item=ApplicationName}.log";
             TargetFile.KeepFileOpen = true;
-            // NLog 6.0: Neue Archive-Konfiguration mit ArchiveSuffixFormat
-            TargetFile.ArchiveFileName = @"${specialfolder:CommonApplicationData}\${gdc:item=ApplicationName}\Logging\${gdc:item=ApplicationName}.{#}.log";
+            // NLog 6.0: Archive configuration with ArchiveSuffixFormat
+            TargetFile.ArchiveFileName = @"${gdc:item=LogDirectory}\${gdc:item=ApplicationName}.{#}.log";
             TargetFile.ArchiveSuffixFormat = "yyyy-MM-dd";
             TargetFile.ArchiveEvery = FileArchivePeriod.Day;
             TargetFile.MaxArchiveFiles = 30;
