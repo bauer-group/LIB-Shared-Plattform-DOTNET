@@ -32,7 +32,7 @@ public class LockingListTests : IDisposable
     public void Add_DuplicateKey_WithoutOverwrite_ReturnsFalse()
     {
         _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
-        var result = _sut.Add("key1", new TestItem { Value = "value2" }, TimeSpan.FromMinutes(5), bOverwrite: false);
+        var result = _sut.Add("key1", new TestItem { Value = "value2" }, TimeSpan.FromMinutes(5), overwrite: false);
         result.Should().BeFalse();
     }
 
@@ -40,7 +40,7 @@ public class LockingListTests : IDisposable
     public void Add_DuplicateKey_WithOverwrite_ReturnsTrue()
     {
         _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
-        var result = _sut.Add("key1", new TestItem { Value = "value2" }, TimeSpan.FromMinutes(5), bOverwrite: true);
+        var result = _sut.Add("key1", new TestItem { Value = "value2" }, TimeSpan.FromMinutes(5), overwrite: true);
         result.Should().BeTrue();
     }
 
