@@ -16,7 +16,7 @@ namespace BAUERGROUP.Shared.Desktop
             return InputBox.Show(ref sData, sCaption);
         }
 
-        public static void LogMessageReceiverWindow(String sTitle = null, Window oOwner = null, Boolean bWait = false)
+        public static void LogMessageReceiverWindow(String? sTitle = null, Window? oOwner = null, Boolean bWait = false)
         {
             var wLogMessageWindow = new LogMessageReceiver(sTitle);
             wLogMessageWindow.Owner = oOwner;

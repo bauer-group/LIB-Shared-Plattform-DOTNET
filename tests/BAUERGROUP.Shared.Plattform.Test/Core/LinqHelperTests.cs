@@ -18,7 +18,7 @@ public class LinqHelperTests
     public void XMLString_WithNull_ReturnsEmptyString()
     {
         XElement? element = null;
-        var result = element.XMLString();
+        var result = element!.XMLString();
 
         result.Should().BeEmpty();
     }
@@ -45,7 +45,7 @@ public class LinqHelperTests
     public void XMLDecimal_WithNull_ReturnsZero()
     {
         XElement? element = null;
-        var result = element.XMLDecimal();
+        var result = element!.XMLDecimal();
 
         result.Should().Be(0m);
     }

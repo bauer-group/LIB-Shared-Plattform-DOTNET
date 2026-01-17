@@ -22,11 +22,16 @@ namespace BAUERGROUP.Shared.Desktop.DataSources
 
             for (int i = 0; i < systemDSNList.Count; i++)
             {
-                String sDSNName = systemDSNList.GetKey(i) as String;
-                DataSourceType eDSNType = (DataSourceType)systemDSNList.GetByIndex(i);                
+                var sDSNName = systemDSNList.GetKey(i) as String;
+                var oDSNType = systemDSNList.GetByIndex(i);
+
+                if (sDSNName == null || oDSNType == null)
+                    continue;
+
+                DataSourceType eDSNType = (DataSourceType)oDSNType;
 
                 try
-                {                    
+                {
                     userDSNList.Add(sDSNName, eDSNType);
                 }
                 catch

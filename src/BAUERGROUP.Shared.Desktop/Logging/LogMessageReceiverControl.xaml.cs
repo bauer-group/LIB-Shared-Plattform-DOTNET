@@ -19,7 +19,7 @@ namespace BAUERGROUP.Shared.Desktop.Logging
 {
     public partial class LogMessageReceiverControl : WpfUserControl
     {
-        private BGLoggerNetworkListener LogReceiver { get; set; }
+        private BGLoggerNetworkListener? LogReceiver { get; set; }
 
         public LogMessageReceiverControl()
         {
@@ -42,11 +42,11 @@ namespace BAUERGROUP.Shared.Desktop.Logging
 
         private void StopLogging()
         {
-            LogReceiver.Dispose();
+            LogReceiver?.Dispose();
             LogReceiver = null;
         }
 
-        private void OnLogMessageReceived(Object oSender, PropertyChangedEventArgs e)
+        private void OnLogMessageReceived(Object? oSender, PropertyChangedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {

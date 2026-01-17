@@ -10,12 +10,12 @@ namespace BAUERGROUP.Shared.Desktop.Extensions
 {
     public static class WPFHelper
     {
-        public static T CloneWPFObject<T>(this T oWPFObject) where T : class
+        public static T? CloneWPFObject<T>(this T? oWPFObject) where T : class
         {
             if (oWPFObject == null)
                 return null;
 
-            Object oCloned = null;
+            Object? oCloned = null;
 
             using (var oStream = new MemoryStream())
             {

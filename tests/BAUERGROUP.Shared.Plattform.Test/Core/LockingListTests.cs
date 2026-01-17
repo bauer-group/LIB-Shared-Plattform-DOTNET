@@ -50,7 +50,7 @@ public class LockingListTests : IDisposable
         _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
         var result = _sut.Get("key1");
         result.Should().NotBeNull();
-        result.Value.Should().Be("value1");
+        result!.Value.Should().Be("value1");
     }
 
     [Fact]
@@ -81,7 +81,7 @@ public class LockingListTests : IDisposable
         _sut.Add("key1", new TestItem { Value = "value1" }, TimeSpan.FromMinutes(5));
         var result = _sut.Remove("key1");
         result.Should().NotBeNull();
-        result.Value.Should().Be("value1");
+        result!.Value.Should().Be("value1");
     }
 
     [Fact]

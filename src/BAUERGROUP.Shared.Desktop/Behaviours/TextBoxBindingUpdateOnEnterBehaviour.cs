@@ -26,7 +26,7 @@ namespace BAUERGROUP.Shared.Desktop.Behaviours
             if (oArguments.Key == Key.Enter)
             {
                 var oTextBox = oSender as WpfTextBox;
-                oTextBox.GetBindingExpression(WpfTextBox.TextProperty).UpdateSource();
+                oTextBox?.GetBindingExpression(WpfTextBox.TextProperty)?.UpdateSource();
             }
         }
     }

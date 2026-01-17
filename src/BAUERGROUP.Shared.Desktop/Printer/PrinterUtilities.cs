@@ -8,7 +8,7 @@ namespace BAUERGROUP.Shared.Desktop.Printer
 {
     public static class PrinterUtilities
     {
-        public static Boolean SelectPrinter(out String sName)
+        public static Boolean SelectPrinter(out String? sName)
         {
             var pDialog = new WpfPrintDialog();
             pDialog.PageRangeSelection = PageRangeSelection.AllPages;

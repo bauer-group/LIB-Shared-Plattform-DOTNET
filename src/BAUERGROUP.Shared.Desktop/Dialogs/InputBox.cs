@@ -14,7 +14,7 @@ namespace BAUERGROUP.Shared.Desktop.Dialogs
             oDialog.Title = sCaption;
             oDialog.Data = sData;
 
-            var bResult = oDialog.ShowDialog().Value;
+            var bResult = oDialog.ShowDialog() ?? false;
             sData = oDialog.Data;
 
             return bResult;

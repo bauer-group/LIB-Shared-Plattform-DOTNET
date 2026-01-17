@@ -75,10 +75,10 @@ namespace BAUERGROUP.Shared.Desktop.Files
             {
                 uint mimetype;
                 uint result = FindMimeFromData(0,
-                                                null,
+                                                null!,
                                                 header,
                                                 (uint)header.Length,
-                                                null,
+                                                null!,
                                                 FMFD_RETURNUPDATEDIMGMIMES,
                                                 out mimetype,
                                                 RESERVED);
@@ -88,9 +88,9 @@ namespace BAUERGROUP.Shared.Desktop.Files
                 }
 
                 IntPtr mimeTypePtr = new IntPtr(mimetype);
-                string mime = Marshal.PtrToStringUni(mimeTypePtr);
+                string? mime = Marshal.PtrToStringUni(mimeTypePtr);
                 Marshal.FreeCoTaskMem(mimeTypePtr);
-                return mime;
+                return mime ?? UNKNOWN;
             }
             catch
             {

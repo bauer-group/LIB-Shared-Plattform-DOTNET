@@ -12,10 +12,10 @@ namespace BAUERGROUP.Shared.Desktop.Extensions
     {
         public static Image FromURL(string sURL)
         {
-            return FromURL(null, sURL);
+            return FromURL(null!, sURL);
         }
 
-        public static Image FromURL(this Image oImage, string sURL)
+        public static Image FromURL(this Image? oImage, string sURL)
         {           
             Stream imageStream = DownloadUtils.DownloadContentToStream(sURL);
 
@@ -26,7 +26,7 @@ namespace BAUERGROUP.Shared.Desktop.Extensions
             return returnImage;
         }
 
-        public static Image ResizeImage(this Image oImage, Size sizeTarget, bool bCenterImage = false)
+        public static Image? ResizeImage(this Image? oImage, Size sizeTarget, bool bCenterImage = false)
         {
             if (oImage == null || sizeTarget.IsEmpty)
                 return null;

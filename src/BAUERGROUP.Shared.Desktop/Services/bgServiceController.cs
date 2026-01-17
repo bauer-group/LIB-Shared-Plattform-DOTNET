@@ -58,7 +58,7 @@ namespace BAUERGROUP.Shared.Desktop.Services
         #endregion
 
         #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string sName)
         {
