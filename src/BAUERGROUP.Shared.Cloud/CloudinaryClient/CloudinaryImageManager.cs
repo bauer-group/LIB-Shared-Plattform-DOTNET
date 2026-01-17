@@ -9,7 +9,7 @@ namespace BAUERGROUP.Shared.Cloud.CloudinaryClient
     public class CloudinaryImageManager : IDisposable
     {
         protected CloudinaryImageManagerConfiguration Configuration { get; private set; }
-        protected Cloudinary Client { get; private set; }
+        protected Cloudinary Client { get; private set; } = null!;
         public CloudinaryImageManager(CloudinaryImageManagerConfiguration oConfiguration)
         {
             Configuration = oConfiguration;
@@ -33,12 +33,12 @@ namespace BAUERGROUP.Shared.Cloud.CloudinaryClient
             return String.Format("{0}/{1:N}", Configuration.Project, gUniqueIdentifier);
         }
 
-        public String UploadImage(String sFilenameOrURL, Guid gUniqueIdentifier, List<Transformation> oTransformations = null)
+        public String UploadImage(String sFilenameOrURL, Guid gUniqueIdentifier, List<Transformation>? oTransformations = null)
         {
             return UploadImage(sFilenameOrURL, gUniqueIdentifier.ToString("N"), oTransformations);
         }
 
-        public String UploadImage(String sFilenameOrURL, String sUniqueIdentifier, List<Transformation> oTransformations = null)
+        public String UploadImage(String sFilenameOrURL, String sUniqueIdentifier, List<Transformation>? oTransformations = null)
         {
             var uploadParameters = new ImageUploadParams()
             {
@@ -111,7 +111,7 @@ namespace BAUERGROUP.Shared.Cloud.CloudinaryClient
             return deleteResult.Partial == false;
         }
 
-        public Resource[] List(String sUniqueIdentifier = null, CloudinaryContentType eType = CloudinaryContentType.Image)
+        public Resource[] List(String? sUniqueIdentifier = null, CloudinaryContentType eType = CloudinaryContentType.Image)
         {
             var listParameters = new ListResourcesParams()
             {
@@ -163,7 +163,7 @@ namespace BAUERGROUP.Shared.Cloud.CloudinaryClient
             return oTransformation.Secure(bSSL).BuildUrl(sUniqueIdentifier);
         }
 
-        public String ToImageTag(Url oTransformation, String sUniqueIdentifier, StringDictionary oParameters = null, Boolean bSSL = true)
+        public String ToImageTag(Url oTransformation, String sUniqueIdentifier, StringDictionary? oParameters = null, Boolean bSSL = true)
         {
             return oTransformation.Secure(bSSL).BuildImageTag(sUniqueIdentifier, oParameters);
         }
@@ -173,7 +173,7 @@ namespace BAUERGROUP.Shared.Cloud.CloudinaryClient
             return Client.Api.UrlImgUp.Secure(bSSL).BuildUrl(sUniqueIdentifier);
         }
 
-        public String ToImageTag(String sUniqueIdentifier, StringDictionary oParameters = null, Boolean bSSL = true)
+        public String ToImageTag(String sUniqueIdentifier, StringDictionary? oParameters = null, Boolean bSSL = true)
         {
             return Client.Api.UrlImgUp.Secure(bSSL).BuildImageTag(sUniqueIdentifier, oParameters);
         }
@@ -183,7 +183,7 @@ namespace BAUERGROUP.Shared.Cloud.CloudinaryClient
             return ToURL(oTransformation, ToCloudinaryUID(gUniqueIdentifier), bSSL);
         }
 
-        public String ToImageTag(Url oTransformation, Guid gUniqueIdentifier, StringDictionary oParameters = null, Boolean bSSL = true)
+        public String ToImageTag(Url oTransformation, Guid gUniqueIdentifier, StringDictionary? oParameters = null, Boolean bSSL = true)
         {
             return ToImageTag(oTransformation, ToCloudinaryUID(gUniqueIdentifier), oParameters, bSSL);
         }
@@ -193,7 +193,7 @@ namespace BAUERGROUP.Shared.Cloud.CloudinaryClient
             return ToURL(ToCloudinaryUID(gUniqueIdentifier), bSSL);
         }
 
-        public String ToImageTag(Guid gUniqueIdentifier, StringDictionary oParameters = null, Boolean bSSL = true)
+        public String ToImageTag(Guid gUniqueIdentifier, StringDictionary? oParameters = null, Boolean bSSL = true)
         {
             return ToImageTag(ToCloudinaryUID(gUniqueIdentifier), oParameters, bSSL);
         }

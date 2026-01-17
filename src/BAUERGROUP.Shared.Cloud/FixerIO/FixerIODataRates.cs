@@ -13,12 +13,12 @@ namespace BAUERGROUP.Shared.Cloud.FixerIO
         public Int32 Timestamp { get; set; }
 
         [JsonPropertyName("base")]
-        public String Base { get; set; }
+        public String Base { get; set; } = string.Empty;
 
         [JsonPropertyName("date")]
         public DateTime? Date { get; set; }
 
         [JsonPropertyName("rates")]
-        public Dictionary<String, Decimal> Rates { get; set; }
+        public Dictionary<String, Decimal> Rates { get; set; } = new();
     }
 }

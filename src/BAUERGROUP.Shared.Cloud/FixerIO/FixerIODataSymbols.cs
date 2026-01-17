@@ -10,6 +10,6 @@ namespace BAUERGROUP.Shared.Cloud.FixerIO
     public class FixerIODataSymbols : FixerIODataBase
     {
         [JsonPropertyName("symbols")]
-        public Dictionary<String, String> Symbols { get; set; }
+        public Dictionary<String, String> Symbols { get; set; } = new();
     }
 }

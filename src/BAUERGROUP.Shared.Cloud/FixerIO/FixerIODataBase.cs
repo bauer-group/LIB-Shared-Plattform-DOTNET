@@ -13,7 +13,7 @@ namespace BAUERGROUP.Shared.Cloud.FixerIO
         public Boolean Success { get; set; }
 
         [JsonPropertyName("error")]
-        public ErrorInfo Error { get; set; }
+        public ErrorInfo? Error { get; set; }
 
         public class ErrorInfo
         {
@@ -21,10 +21,10 @@ namespace BAUERGROUP.Shared.Cloud.FixerIO
             public Int32 Code { get; set; }
 
             [JsonPropertyName("type")]
-            public String Type { get; set; }
+            public String Type { get; set; } = string.Empty;
 
             [JsonPropertyName("info")]
-            public String Info { get; set; }
+            public String Info { get; set; } = string.Empty;
         }
     }
 }

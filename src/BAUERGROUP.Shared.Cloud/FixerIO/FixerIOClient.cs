@@ -62,7 +62,10 @@ namespace BAUERGROUP.Shared.Cloud.FixerIO
 
         private static string GetUserAgent()
         {
-            return String.Format("{0} - v{1}", Assembly.GetEntryAssembly().GetName().Name, Assembly.GetEntryAssembly().GetName().Version.ToString());
+            var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
+            var version = assembly.GetName().Version?.ToString() ?? "1.0.0";
+            var name = assembly.GetName().Name ?? "Unknown";
+            return $"{name} - v{version}";
         }
 
         public void Dispose()
@@ -82,7 +85,7 @@ namespace BAUERGROUP.Shared.Cloud.FixerIO
             }
         }
 
-        protected async Task<T> Get<T>(String sResource, params Parameter[] oParameters)
+        protected async Task<T?> Get<T>(String sResource, params Parameter[] oParameters)
         {
             return await ExceptionHandlerAsync(async () =>
             {
@@ -96,22 +99,22 @@ namespace BAUERGROUP.Shared.Cloud.FixerIO
             });
         }
 
-        public async Task<FixerIODataSymbols> GetSymbols()
+        public async Task<FixerIODataSymbols?> GetSymbols()
         {
             return await Get<FixerIODataSymbols>("symbols");
         }
 
-        public async Task<FixerIODataRates> GetLatestRates()
+        public async Task<FixerIODataRates?> GetLatestRates()
         {
             return await Get<FixerIODataRates>("latest");
         }
 
-        public async Task<FixerIODataRates> GetLatestRates(String sBaseCurrency)
+        public async Task<FixerIODataRates?> GetLatestRates(String sBaseCurrency)
         {
             return await Get<FixerIODataRates>("latest", Parameter.CreateParameter("base", sBaseCurrency, ParameterType.GetOrPost));
         }
 
-        public async Task<FixerIODataRates> GetHistoricalRates(DateTime dtDate, String sBaseCurrency = null)
+        public async Task<FixerIODataRates?> GetHistoricalRates(DateTime dtDate, String? sBaseCurrency = null)
         {
             if (sBaseCurrency == null)
                 return await Get<FixerIODataRates>($"{dtDate:yyyy-MM-dd}");
