@@ -1,3 +1,9 @@
+## [2.1.5](https://github.com/bauer-group/LIB-Shared-Plattform-NET/compare/v2.1.4...v2.1.5) (2026-01-17)
+
+### ♻️ Refactoring
+
+* remove hungarin notation refactor ([1dfb74e](https://github.com/bauer-group/LIB-Shared-Plattform-NET/commit/1dfb74e3cb0aa9955dfee026c4233c5724e3646f))
+
 ## [2.1.4](https://github.com/bauer-group/LIB-Shared-Plattform-NET/compare/v2.1.3...v2.1.4) (2026-01-17)
 
 ### 🐛 Bug Fixes
