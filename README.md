@@ -1,10 +1,12 @@
 # BAUER GROUP Shared Platform
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![.NET](https://img.shields.io/badge/.NET-10.0-512BD4)](https://dotnet.microsoft.com/)
+[![.NET 10](https://img.shields.io/badge/.NET-10.0-512BD4)](https://dotnet.microsoft.com/)
+[![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4)](https://dotnet.microsoft.com/)
+[![.NET Standard 2.0](https://img.shields.io/badge/.NET%20Standard-2.0-512BD4)](https://dotnet.microsoft.com/)
 [![NuGet](https://img.shields.io/badge/NuGet-Ready-004880)](https://www.nuget.org/)
 
-A comprehensive .NET 10 shared library platform providing essential building blocks for enterprise applications within the BAUER GROUP ecosystem.
+A comprehensive multi-target .NET shared library platform providing essential building blocks for enterprise applications within the BAUER GROUP ecosystem. Supports .NET 10, .NET 8, and .NET Standard 2.0 for maximum compatibility.
 
 ---
 
@@ -14,7 +16,7 @@ The BAUER GROUP Shared Platform is a modular, multi-project solution designed to
 
 ### Key Features
 
-- **Modern .NET 10**: Built on the latest .NET platform with full support for modern C# features
+- **Multi-Target Support**: .NET 10, .NET 8, and .NET Standard 2.0 for broad compatibility
 - **Modular Architecture**: Pick only the packages you need
 - **Enterprise-Ready Logging**: NLog-based logging with Sentry integration for error tracking
 - **Data Layer**: Support for SQLite (encrypted), LiteDB, and in-memory databases
@@ -27,16 +29,16 @@ The BAUER GROUP Shared Platform is a modular, multi-project solution designed to
 
 ## Packages
 
-| Package | Description |
-|---------|-------------|
-| `BAUERGROUP.Shared.Core` | Core utilities, extensions, logging (NLog + Sentry), error tracking |
-| `BAUERGROUP.Shared.Data` | Data persistence: SQLite, LiteDB, in-memory database, caching |
-| `BAUERGROUP.Shared.API` | E-commerce integrations: Shopify, Shopware 5/6, WooCommerce |
-| `BAUERGROUP.Shared.API.Shipping` | Shipping providers: DHL, DPD, GLS, Deutsche Post, UPS |
-| `BAUERGROUP.Shared.Cloud` | Cloud services: Cloudinary media management |
-| `BAUERGROUP.Shared.Desktop` | WPF/WinForms utilities, behaviors, converters |
-| `BAUERGROUP.Shared.Desktop.Browser` | Embedded Chromium browser (CefSharp) for WPF |
-| `BAUERGROUP.Shared.Desktop.Reporting` | Stimulsoft Reports integration* |
+| Package | Target Frameworks | Description |
+|---------|-------------------|-------------|
+| `BAUERGROUP.Shared.Core` | net10.0, net8.0, netstandard2.0 | Core utilities, extensions, logging (NLog + Sentry), error tracking |
+| `BAUERGROUP.Shared.Data` | net10.0, net8.0, netstandard2.0 | Data persistence: SQLite, LiteDB, in-memory database, caching |
+| `BAUERGROUP.Shared.API` | net10.0, net8.0, netstandard2.0 | E-commerce integrations: Shopify, Shopware 5/6, WooCommerce |
+| `BAUERGROUP.Shared.API.Shipping` | net10.0, net8.0, netstandard2.0 | Shipping providers: DHL, DPD, GLS, Deutsche Post, UPS |
+| `BAUERGROUP.Shared.Cloud` | net10.0, net8.0 | Cloud services: Cloudinary media management |
+| `BAUERGROUP.Shared.Desktop` | net10.0-windows, net8.0-windows | WPF/WinForms utilities, behaviors, converters |
+| `BAUERGROUP.Shared.Desktop.Browser` | net10.0-windows, net8.0-windows | Embedded Chromium browser (CefSharp) for WPF |
+| `BAUERGROUP.Shared.Desktop.Reporting` | net10.0-windows, net8.0-windows | Stimulsoft Reports integration* |
 
 *\*Requires separate Stimulsoft license*
 
@@ -138,8 +140,8 @@ WPFToolboxBrowser.ChromeEmbeddedWebbrowserWindow(
 
 ### Runtime Requirements
 
-- **.NET 10.0** or later
-- **Windows** (for Desktop packages)
+- **.NET 10.0**, **.NET 8.0**, or **.NET Standard 2.0** compatible runtime
+- **Windows** (for Desktop packages: `Desktop`, `Desktop.Browser`, `Desktop.Reporting`)
 
 ### Optional Requirements
 
@@ -181,8 +183,8 @@ BAUERGROUP.Shared.Plattform/
 
 ### Prerequisites
 
-- [.NET 10 SDK](https://dotnet.microsoft.com/download)
-- Visual Studio 2022 (17.8+) or JetBrains Rider
+- [.NET 10 SDK](https://dotnet.microsoft.com/download) (includes support for .NET 8 and earlier)
+- Visual Studio 2022 (17.12+) or JetBrains Rider 2024.3+
 
 ### Build
 
