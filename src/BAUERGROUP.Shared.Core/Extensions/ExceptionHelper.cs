@@ -23,7 +23,8 @@ namespace BAUERGROUP.Shared.Core.Extensions
                                  x.Value != null ? x.Value.ToString() : String.Empty
                              ));
 
-            return String.Join(Environment.NewLine, fieldList);
+            var typeName = $"Type = {oException.GetType().Name}";
+            return typeName + Environment.NewLine + String.Join(Environment.NewLine, fieldList);
         }
     }
 }

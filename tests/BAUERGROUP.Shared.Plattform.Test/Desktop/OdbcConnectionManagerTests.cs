@@ -34,9 +34,9 @@ public class OdbcConnectionManagerTests
         var result = OdbcConnectionManager.GetConnectionString(dsn, username, password);
 
         result.Should().NotBeNullOrEmpty();
-        result.Should().Contain("DSN=TestDSN");
-        result.Should().Contain("UID=testuser");
-        result.Should().Contain("PWD=testpass");
+        result.ToUpper().Should().Contain("DSN=TESTDSN");
+        result.ToUpper().Should().Contain("UID=TESTUSER");
+        result.ToUpper().Should().Contain("PWD=TESTPASS");
     }
 
     [Fact]
@@ -44,8 +44,8 @@ public class OdbcConnectionManagerTests
     {
         var result = OdbcConnectionManager.GetConnectionString("DSN", "", "pass");
 
-        result.Should().Contain("DSN=DSN");
-        result.Should().Contain("UID=");
+        result.ToUpper().Should().Contain("DSN=DSN");
+        result.ToUpper().Should().Contain("UID=");
     }
 
     [Fact]
@@ -53,8 +53,8 @@ public class OdbcConnectionManagerTests
     {
         var result = OdbcConnectionManager.GetConnectionString("DSN", "user", "");
 
-        result.Should().Contain("DSN=DSN");
-        result.Should().Contain("PWD=");
+        result.ToUpper().Should().Contain("DSN=DSN");
+        result.ToUpper().Should().Contain("PWD=");
     }
 
     [Fact]

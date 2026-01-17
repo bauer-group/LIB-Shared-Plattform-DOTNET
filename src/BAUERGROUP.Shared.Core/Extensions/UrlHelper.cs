@@ -12,7 +12,7 @@ namespace BAUERGROUP.Shared.Core.Extensions
             foreach (var oProperty in oProperties)
             {
                 var oValue = oProperty.GetValue(oData, null);
-                sURL = sURL.SetParameterValue($"{{{oProperty.Name}}}", oValue == null ? "" : (string)oValue, true);
+                sURL = sURL.SetParameterValue($"{{{oProperty.Name}}}", oValue == null ? "" : Uri.EscapeDataString((string)oValue), false);
             }
 
             return sURL;

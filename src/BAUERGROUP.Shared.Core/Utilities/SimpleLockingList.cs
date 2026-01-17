@@ -15,12 +15,12 @@ namespace BAUERGROUP.Shared.Core.Utilities
 
         public void Add(String sCode, TimeSpan tsExpiration)
         {
-            this.Add(sCode, DateTime.UtcNow.Add(tsExpiration), tsExpiration);
+            this.Add(sCode, DateTime.UtcNow.Add(tsExpiration), tsExpiration, true);
         }
 
         public DateTime GetUnlockTime(String sCode)
         {
-            return this.Get(sCode);
+            return this.Get(sCode)!;
         }
     }
 }

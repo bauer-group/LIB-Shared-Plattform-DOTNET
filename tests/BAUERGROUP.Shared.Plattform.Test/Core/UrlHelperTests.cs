@@ -85,7 +85,8 @@ public class UrlHelperTests
 
         var result = data.SetURLParameters(url);
 
-        result.Should().Contain("Test&Name");
+        // URL encoding: & becomes %26
+        result.Should().Contain("Test%26Name");
     }
 
     public class QueryData
