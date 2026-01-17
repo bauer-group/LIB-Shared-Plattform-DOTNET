@@ -6,7 +6,7 @@ namespace BAUERGROUP.Shared.Core.Application
 {
     public static class ApplicationProperties
     {
-        public static Assembly EntryAssembly
+        public static Assembly? EntryAssembly
         {
             get
             {
@@ -46,7 +46,7 @@ namespace BAUERGROUP.Shared.Core.Application
             }
         }
 
-        public static Version Version
+        public static Version? Version
         {
             get
             {
@@ -54,7 +54,7 @@ namespace BAUERGROUP.Shared.Core.Application
             }
         }
 
-        public static String Name
+        public static String? Name
         {
             get
             {

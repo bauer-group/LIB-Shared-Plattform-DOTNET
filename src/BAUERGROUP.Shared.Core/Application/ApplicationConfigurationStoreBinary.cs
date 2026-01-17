@@ -25,7 +25,7 @@ public class ApplicationConfigurationStoreBinary<T> : IApplicationConfigurationS
     /// <param name="fileName">The configuration file path. If null, uses default location.</param>
     public ApplicationConfigurationStoreBinary(string? fileName = null)
     {
-        _fileName = string.IsNullOrEmpty(fileName) ? ConfigurationBinaryFileName : fileName;
+        _fileName = fileName ?? ConfigurationBinaryFileName;
         ConfigurationConverter = null;
     }
 

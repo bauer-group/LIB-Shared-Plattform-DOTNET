@@ -11,8 +11,8 @@ namespace BAUERGROUP.Shared.Core.Files
 {
     public class CSVFileReader : IDisposable
     {
-        protected StreamReader _sr;
-        protected CsvReader _cr;
+        protected StreamReader? _sr;
+        protected CsvReader? _cr;
 
         public CSVFileReader(String sFileName, Encoding? oEncoding = null, String sDelimiter = @";", Char sQuote = '"', Boolean bQuoteAllFields = true, CultureInfo? oCulture = null, Boolean bHasHeader = true)
         {
@@ -26,7 +26,7 @@ namespace BAUERGROUP.Shared.Core.Files
                 Encoding = oEncoding == null ? Encoding.Unicode : oEncoding,
                 Quote = sQuote,
                 ShouldQuote = (quote) => bQuoteAllFields,
-                ShouldSkipRecord = (record) => record.Row.Parser.Record.All(String.IsNullOrWhiteSpace),
+                ShouldSkipRecord = (record) => record.Row.Parser.Record?.All(String.IsNullOrWhiteSpace) ?? false,
                 TrimOptions = TrimOptions.Trim | TrimOptions.InsideQuotes,
                 IgnoreBlankLines = true,                
             });
@@ -39,7 +39,7 @@ namespace BAUERGROUP.Shared.Core.Files
 
             _sr.Close();
 
-            _cr.Dispose();
+            _cr?.Dispose();
             _sr.Dispose();
 
             _cr = null;
@@ -53,7 +53,7 @@ namespace BAUERGROUP.Shared.Core.Files
 
         public IEnumerable<T> ReadRecords<T>()
         {
-            return _cr.GetRecords<T>();            
+            return _cr?.GetRecords<T>() ?? Enumerable.Empty<T>();
         }
     }
 }

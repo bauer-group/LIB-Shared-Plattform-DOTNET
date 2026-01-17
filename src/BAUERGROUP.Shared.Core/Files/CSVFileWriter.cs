@@ -12,10 +12,10 @@ namespace BAUERGROUP.Shared.Core.Files
 {
     public class CSVFileWriter : IDisposable
     {
-        protected StreamWriter _sw;
-        protected CsvWriter _cw;
+        protected StreamWriter? _sw;
+        protected CsvWriter? _cw;
 
-        public CSVFileWriter(String sFileName, Encoding oEncoding = null, Boolean bAppendFile = false, String sDelimiter = @";", Char sQuote = '"', Boolean bQuoteAllFields = true, CultureInfo oCulture = null, Boolean bHasHeader = true)
+        public CSVFileWriter(String sFileName, Encoding? oEncoding = null, Boolean bAppendFile = false, String sDelimiter = @";", Char sQuote = '"', Boolean bQuoteAllFields = true, CultureInfo? oCulture = null, Boolean bHasHeader = true)
         {
             _sw = new StreamWriter(sFileName, bAppendFile, oEncoding == null ? Encoding.Unicode : oEncoding);
             _cw = new CsvWriter(_sw, new CsvConfiguration(oCulture == null ? CultureInfo.CurrentCulture : oCulture)
@@ -27,7 +27,7 @@ namespace BAUERGROUP.Shared.Core.Files
                 Encoding = oEncoding == null ? Encoding.Unicode : oEncoding,
                 Quote = sQuote,
                 ShouldQuote = (quote) => bQuoteAllFields,                
-                ShouldSkipRecord = (record) => record.Row.Parser.Record.All(String.IsNullOrWhiteSpace),
+                ShouldSkipRecord = (record) => record.Row.Parser.Record?.All(String.IsNullOrWhiteSpace) ?? false,
                 TrimOptions = TrimOptions.Trim | TrimOptions.InsideQuotes,
                 IgnoreBlankLines = true,
             });
@@ -40,7 +40,7 @@ namespace BAUERGROUP.Shared.Core.Files
 
             _sw.Close();
 
-            _cw.Dispose();
+            _cw?.Dispose();
             _sw.Dispose();
 
             _cw = null;
@@ -54,27 +54,27 @@ namespace BAUERGROUP.Shared.Core.Files
 
         public void WriteHeader<T>()
         {
-            _cw.WriteHeader<T>();
+            _cw?.WriteHeader<T>();
         }
 
         public void WriteRecord<T>(T oEntry)
         {
-            _cw.WriteRecord(oEntry);
+            _cw?.WriteRecord(oEntry);
         }
-        
+
         public void WriteRecords(IEnumerable oEntries)
         {
-            _cw.WriteRecords(oEntries);
+            _cw?.WriteRecords(oEntries);
         }
 
         public void WriteField<T>(T oEnty)
         {
-            _cw.WriteField(oEnty);
+            _cw?.WriteField(oEnty);
         }
 
         public void NextRecord()
         {
-            _cw.NextRecord();
+            _cw?.NextRecord();
         }
     }
 }

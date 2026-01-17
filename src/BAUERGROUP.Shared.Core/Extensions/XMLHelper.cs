@@ -11,7 +11,7 @@ namespace BAUERGROUP.Shared.Core.Extensions
 {
     public static class XMLHelper
     {
-        public static String SerializeToXML<T>(this T oValue)
+        public static String? SerializeToXML<T>(this T oValue)
         {
             if (oValue == null)
             {
@@ -35,12 +35,12 @@ namespace BAUERGROUP.Shared.Core.Extensions
             }
         }
 
-        public static T DeserializeFromXML<T>(this String sXML)
+        public static T? DeserializeFromXML<T>(this String sXML)
         {
 
             if (String.IsNullOrEmpty(sXML))
             {
-                return default(T);
+                return default;
             }
 
             XmlSerializer serializer = new XmlSerializer(typeof(T));
@@ -51,7 +51,8 @@ namespace BAUERGROUP.Shared.Core.Extensions
             {
                 using (XmlReader xmlReader = XmlReader.Create(textReader, settings))
                 {
-                    return (T)serializer.Deserialize(xmlReader);
+                    var result = serializer.Deserialize(xmlReader);
+                    return result != null ? (T)result : default;
                 }
             }
         }

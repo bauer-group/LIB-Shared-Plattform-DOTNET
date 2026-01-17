@@ -14,9 +14,9 @@ namespace BAUERGROUP.Shared.Data.EmbeddedDatabase
     {
         protected String FileName { get; private set; }
         protected String TableName { get; private set; }
-        protected SQLiteConnection Connection { get; private set; }
+        protected SQLiteConnection? Connection { get; private set; }
 
-        public ConcurrentPersistentDictionary(String sDataStorageDirectory = null, String sDatabaseName = null, String sTableName = null)
+        public ConcurrentPersistentDictionary(String? sDataStorageDirectory = null, String? sDatabaseName = null, String? sTableName = null)
         {
             var sDirectory = String.IsNullOrEmpty(sDataStorageDirectory) ? ApplicationDatabaseFolder : sDataStorageDirectory;
             var sDBName = String.IsNullOrEmpty(sDatabaseName) ? @"Database" : sDatabaseName;
@@ -78,18 +78,18 @@ namespace BAUERGROUP.Shared.Data.EmbeddedDatabase
                 Connection.Delete<ConcurrentPersistentDictionaryStorage>(oItem.ID);
         }
 
-        public TValue Read(TKey oKey)
+        public TValue? Read(TKey oKey)
         {
             try
             {
                 var sKey = ConvertKey2StorageFormat(oKey);
-                var oResult = Connection.Table<ConcurrentPersistentDictionaryStorage>().Where(p => p.Container == TableName).Where(p => p.Key == sKey).Single();
-                
-                return JsonSerializer.Deserialize<TValue>(oResult.Value);                
+                var oResult = Connection!.Table<ConcurrentPersistentDictionaryStorage>().Where(p => p.Container == TableName).Where(p => p.Key == sKey).Single();
+
+                return JsonSerializer.Deserialize<TValue>(oResult.Value);
             }
             catch (InvalidOperationException)
             {
-                return default(TValue);
+                return default;
             }
         }
 
@@ -139,19 +139,19 @@ namespace BAUERGROUP.Shared.Data.EmbeddedDatabase
             return ObjectHelper.SerializeToJSON<TKey>(oKey);
         }
 
-        private TKey ConvertKey2RuntimeFormat(String sKey)
+        private TKey? ConvertKey2RuntimeFormat(String sKey)
         {
-            return ObjectHelper.DeserializeFromJSON<TKey>(sKey);          
+            return ObjectHelper.DeserializeFromJSON<TKey>(sKey);
         }
 
         private String ConvertValue2StorageFormat(TValue oValue)
         {
-            return ObjectHelper.SerializeToJSON<TValue>(oValue);            
+            return ObjectHelper.SerializeToJSON<TValue>(oValue);
         }
 
-        private TValue ConvertValue2RuntimeFormat(String sValue)
+        private TValue? ConvertValue2RuntimeFormat(String sValue)
         {
-            return ObjectHelper.DeserializeFromJSON<TValue>(sValue);        
+            return ObjectHelper.DeserializeFromJSON<TValue>(sValue);
         }
     }
 }

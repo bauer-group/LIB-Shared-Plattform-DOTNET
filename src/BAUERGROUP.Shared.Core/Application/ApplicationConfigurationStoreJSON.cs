@@ -22,7 +22,7 @@ public class ApplicationConfigurationStoreJSON<T> : IApplicationConfigurationSto
     /// <param name="includeTypes">Whether to include type information in JSON.</param>
     public ApplicationConfigurationStoreJSON(string? fileName, bool includeTypes)
     {
-        _fileName = string.IsNullOrEmpty(fileName) ? DefaultConfigurationFilename : fileName;
+        _fileName = fileName ?? DefaultConfigurationFilename;
         _includeTypes = includeTypes;
     }
 

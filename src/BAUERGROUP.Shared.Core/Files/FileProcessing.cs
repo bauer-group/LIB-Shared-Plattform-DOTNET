@@ -71,7 +71,8 @@ namespace BAUERGROUP.Shared.Core.Files
 
         private string GetTargetFilename(string sSourceFilename)
         {
-            return Path.Combine(Path.GetDirectoryName(sSourceFilename), String.Format("[{0:yyyy-MM-dd HHmmss}] {1}", DateTime.Now, Path.GetFileName(sSourceFilename)));
+            var directory = Path.GetDirectoryName(sSourceFilename) ?? string.Empty;
+            return Path.Combine(directory, String.Format("[{0:yyyy-MM-dd HHmmss}] {1}", DateTime.Now, Path.GetFileName(sSourceFilename)));
         }
     }
 }

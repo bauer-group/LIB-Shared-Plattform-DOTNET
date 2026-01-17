@@ -343,7 +343,7 @@ namespace BAUERGROUP.Shared.Core.Logging
             }
         }
 
-        private static void ReportUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        private static void ReportUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
         {
             Fatal(e.Exception, String.Format("UnobservedTaskException => Observed = {0}", e.Observed));            
             Environment.Exit(0);

@@ -14,7 +14,7 @@ namespace BAUERGROUP.Shared.Core.Images
             Timestamp = DateTime.UtcNow;
         }
 
-        public Byte[] Content { get; set; }
+        public Byte[]? Content { get; set; }
         public DateTime Timestamp { get; set; }
 
         public IndependentImageFormat Format { get { return GetFormat(Content); } }
@@ -45,7 +45,7 @@ namespace BAUERGROUP.Shared.Core.Images
             throw new NotImplementedException();
         }
 
-        private static IndependentImageFormat GetFormat(Byte[] oRawData)
+        private static IndependentImageFormat GetFormat(Byte[]? oRawData)
         {
             if (oRawData == null || oRawData.Length == 0)
                 return IndependentImageFormat.Unkown;

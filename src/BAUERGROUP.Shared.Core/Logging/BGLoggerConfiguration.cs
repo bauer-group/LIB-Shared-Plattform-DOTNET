@@ -22,7 +22,12 @@ namespace BAUERGROUP.Shared.Core.Logging
         {
             //Basic
             if (String.IsNullOrWhiteSpace(GlobalDiagnosticsContext.Get("ApplicationName")))
-                ApplicationName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
+            {
+                var entryAssembly = Assembly.GetEntryAssembly();
+                ApplicationName = entryAssembly != null
+                    ? Path.GetFileNameWithoutExtension(entryAssembly.Location)
+                    : "UnknownApp";
+            }
 
             // Initialize LogDirectory with default value if not already set
             if (String.IsNullOrWhiteSpace(GlobalDiagnosticsContext.Get("LogDirectory")))
@@ -422,13 +427,13 @@ namespace BAUERGROUP.Shared.Core.Logging
             }
         }
 
-        private string _sentryDsn;
+        private string? _sentryDsn;
 
         /// <summary>
         /// Sentry DSN für Error Tracking. Muss vor Aktivierung von ErrorTracking gesetzt werden.
         /// Beispiel: BGLogger.Configuration.SentryDsn = "https://...@sentry.io/...";
         /// </summary>
-        public string SentryDsn
+        public string? SentryDsn
         {
             get => _sentryDsn;
             set
@@ -662,40 +667,40 @@ namespace BAUERGROUP.Shared.Core.Logging
             LoggingRuleErrorTracking = new LoggingRule("*", LogLevel.Debug, TargetErrorTracking);
         }
 
-        public LoggingConfiguration Targets { get; private set; }
+        public LoggingConfiguration Targets { get; private set; } = null!;
 
-        protected FileTarget TargetFile { get; private set; }
-        protected DebugTarget TargetDebug { get; private set; }
-        protected NetworkTarget TargetNetwork { get; private set; }
-        protected MailTarget TargetMail { get; private set; }
-        protected Log4JXmlTarget TargetLogViewer { get; private set; }
-        protected ConsoleTarget TargetConsole { get; private set; }
-        protected ColoredConsoleTarget TargetConsoleColored { get; private set; }        
-        protected MemoryTarget TargetMemory { get; private set; }
+        protected FileTarget TargetFile { get; private set; } = null!;
+        protected DebugTarget TargetDebug { get; private set; } = null!;
+        protected NetworkTarget TargetNetwork { get; private set; } = null!;
+        protected MailTarget TargetMail { get; private set; } = null!;
+        protected Log4JXmlTarget TargetLogViewer { get; private set; } = null!;
+        protected ConsoleTarget TargetConsole { get; private set; } = null!;
+        protected ColoredConsoleTarget TargetConsoleColored { get; private set; } = null!;
+        protected MemoryTarget TargetMemory { get; private set; } = null!;
 #if !NETSTANDARD2_0
-        protected EventLogTarget TargetEventlog { get; private set; }
+        protected EventLogTarget TargetEventlog { get; private set; } = null!;
 #endif
-        protected TraceTarget TargetTrace { get; private set; }
-        protected DebuggerTarget TargetDebugger { get; private set; }
-        protected WebServiceTarget TargetLogReceiverService { get; private set; }
-        protected SentryTarget TargetErrorTracking { get; private set; }
+        protected TraceTarget TargetTrace { get; private set; } = null!;
+        protected DebuggerTarget TargetDebugger { get; private set; } = null!;
+        protected WebServiceTarget TargetLogReceiverService { get; private set; } = null!;
+        protected SentryTarget TargetErrorTracking { get; private set; } = null!;
 
-        protected LoggingRule LoggingRuleFile { get; private set; }
-        protected LoggingRule LoggingRuleDebug { get; private set; }
-        protected LoggingRule LoggingRuleNetwork { get; private set; }
-        protected LoggingRule LoggingRuleMail { get; private set; }
-        protected LoggingRule LoggingRuleLogViewer { get; private set; }
-        protected LoggingRule LoggingRuleConsole { get; private set; }
-        protected LoggingRule LoggingRuleConsoleColored { get; private set; }
-        protected LoggingRule LoggingRuleDebugString { get; private set; }
-        protected LoggingRule LoggingRuleMemory { get; private set; }
+        protected LoggingRule LoggingRuleFile { get; private set; } = null!;
+        protected LoggingRule LoggingRuleDebug { get; private set; } = null!;
+        protected LoggingRule LoggingRuleNetwork { get; private set; } = null!;
+        protected LoggingRule LoggingRuleMail { get; private set; } = null!;
+        protected LoggingRule LoggingRuleLogViewer { get; private set; } = null!;
+        protected LoggingRule LoggingRuleConsole { get; private set; } = null!;
+        protected LoggingRule LoggingRuleConsoleColored { get; private set; } = null!;
+        protected LoggingRule? LoggingRuleDebugString { get; private set; }
+        protected LoggingRule LoggingRuleMemory { get; private set; } = null!;
 #if !NETSTANDARD2_0
-        protected LoggingRule LoggingRuleEventlog { get; private set; }
+        protected LoggingRule LoggingRuleEventlog { get; private set; } = null!;
 #endif
-        protected LoggingRule LoggingRuleTrace { get; private set; }
-        protected LoggingRule LoggingRuleDebugger { get; private set; }
-        protected LoggingRule LoggingRuleLogReceiverService { get; private set; }
-        protected LoggingRule LoggingRuleErrorTracking { get; private set; }
+        protected LoggingRule LoggingRuleTrace { get; private set; } = null!;
+        protected LoggingRule LoggingRuleDebugger { get; private set; } = null!;
+        protected LoggingRule LoggingRuleLogReceiverService { get; private set; } = null!;
+        protected LoggingRule LoggingRuleErrorTracking { get; private set; } = null!;
 
         public void Reconfigure()
         {
@@ -737,7 +742,7 @@ namespace BAUERGROUP.Shared.Core.Logging
 
         public String LogReceiverServiceEndpointAddress
         {
-            get { return TargetLogReceiverService.Url.FixedValue.AbsoluteUri; }
+            get { return TargetLogReceiverService.Url?.FixedValue?.AbsoluteUri ?? string.Empty; }
             set { TargetLogReceiverService.Url = new Uri(value); Reconfigure(); }
         }
 

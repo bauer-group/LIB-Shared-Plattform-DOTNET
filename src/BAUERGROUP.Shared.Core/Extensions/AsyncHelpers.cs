@@ -46,13 +46,13 @@ namespace BAUERGROUP.Shared.Core.Extensions
         /// <typeparam name="T">Return Type.</typeparam>
         /// <param name="oTask">Task method to execute.</param>
         /// <returns>The result of the task.</returns>
-        public static T RunSync<T>(Func<Task<T>> oTask)
+        public static T? RunSync<T>(Func<Task<T>> oTask)
         {
             var oExistingContext = SynchronizationContext.Current;
             var oExclusiveSynchronisation = new ExclusiveSynchronizationContext();
             SynchronizationContext.SetSynchronizationContext(oExclusiveSynchronisation);
 
-            T oReturn = default(T);
+            T? oReturn = default;
             oExclusiveSynchronisation.Post(async _ =>
             {
                 try
@@ -80,16 +80,16 @@ namespace BAUERGROUP.Shared.Core.Extensions
         private class ExclusiveSynchronizationContext : SynchronizationContext
         {
             private Boolean bCompleted;
-            public Exception InnerException { get; set; }
+            public Exception? InnerException { get; set; }
             readonly AutoResetEvent oWorkItemsWaiting = new AutoResetEvent(false);
-            readonly Queue<Tuple<SendOrPostCallback, object>> oItems = new Queue<Tuple<SendOrPostCallback, object>>();
+            readonly Queue<Tuple<SendOrPostCallback, object?>> oItems = new Queue<Tuple<SendOrPostCallback, object?>>();
 
-            public override void Send(SendOrPostCallback oPostCallback, Object oState)
+            public override void Send(SendOrPostCallback oPostCallback, Object? oState)
             {
                 throw new NotSupportedException("Unable to send on same Thread.");
             }
 
-            public override void Post(SendOrPostCallback oPostCallback, Object oState)
+            public override void Post(SendOrPostCallback oPostCallback, Object? oState)
             {
                 lock (oItems)
                 {
@@ -108,7 +108,7 @@ namespace BAUERGROUP.Shared.Core.Extensions
             {
                 while (!bCompleted)
                 {
-                    Tuple<SendOrPostCallback, object> oTask = null;
+                    Tuple<SendOrPostCallback, object?>? oTask = null;
 
                     lock (oItems)
                     {

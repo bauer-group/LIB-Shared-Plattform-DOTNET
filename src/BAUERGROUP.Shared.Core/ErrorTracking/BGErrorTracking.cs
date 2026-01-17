@@ -17,7 +17,7 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
     public sealed class BGErrorTracking
     {
         #region Instance
-        private IDisposable _sentryInstance;
+        private IDisposable? _sentryInstance;
 
         private BGErrorTracking() { }
 
@@ -54,7 +54,7 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
         /// <summary>
         /// Initialisiert Sentry mit erweiterten Optionen
         /// </summary>
-        public static void Init(string dsn, Action<SentryOptions> configureOptions)
+        public static void Init(string dsn, Action<SentryOptions>? configureOptions)
         {
             if (IsInitialized) return;
             if (string.IsNullOrWhiteSpace(dsn)) return;
@@ -151,7 +151,7 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
         /// <summary>
         /// Erfasst eine Exception mit Level (wird intern vom NLog Target verwendet)
         /// </summary>
-        internal static SentryId CaptureException(Exception exception, string message, SentryLevel level)
+        internal static SentryId CaptureException(Exception? exception, string? message, SentryLevel level)
         {
             if (!IsInitialized) return SentryId.Empty;
 
@@ -166,7 +166,7 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
             }
             else if (!string.IsNullOrEmpty(message))
             {
-                return SentrySdk.CaptureMessage(message, level);
+                return SentrySdk.CaptureMessage(message!, level);
             }
 
             return SentryId.Empty;
@@ -214,9 +214,9 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
         /// Fügt einen Breadcrumb hinzu (Trace-Pfad)
         /// </summary>
         public static void AddBreadcrumb(string message,
-            string category = null,
-            string type = null,
-            IDictionary<string, string> data = null,
+            string? category = null,
+            string? type = null,
+            IDictionary<string, string>? data = null,
             BreadcrumbLevel level = BreadcrumbLevel.Info)
         {
             if (!IsInitialized) return;
@@ -265,8 +265,8 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
         /// <summary>
         /// Setzt den aktuellen Benutzer
         /// </summary>
-        public static void SetUser(string id, string email = null,
-            string username = null, string ipAddress = null)
+        public static void SetUser(string id, string? email = null,
+            string? username = null, string? ipAddress = null)
         {
             if (!IsInitialized) return;
             SentrySdk.ConfigureScope(scope =>
@@ -287,7 +287,7 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
         public static void ClearUser()
         {
             if (!IsInitialized) return;
-            SentrySdk.ConfigureScope(scope => scope.User = null);
+            SentrySdk.ConfigureScope(scope => scope.User = null!);
         }
         #endregion
 
@@ -337,7 +337,7 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
         /// <summary>
         /// Startet eine Transaction für Performance Monitoring
         /// </summary>
-        public static ITransactionTracer StartTransaction(string name, string operation)
+        public static ITransactionTracer? StartTransaction(string name, string operation)
         {
             if (!IsInitialized) return null;
             return SentrySdk.StartTransaction(name, operation);
@@ -354,9 +354,9 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
 
         private class TransactionScope : IDisposable
         {
-            private readonly ITransactionTracer _transaction;
+            private readonly ITransactionTracer? _transaction;
 
-            public TransactionScope(ITransactionTracer transaction)
+            public TransactionScope(ITransactionTracer? transaction)
             {
                 _transaction = transaction;
             }
@@ -386,7 +386,7 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
             }
         }
 
-        private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private static void OnUnhandledException(object? sender, UnhandledExceptionEventArgs e)
         {
             var exception = e.ExceptionObject as Exception;
             if (exception != null && IsInitialized)
@@ -403,7 +403,7 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
             }
         }
 
-        private static void OnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        private static void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
         {
             if (!IsInitialized) return;
 

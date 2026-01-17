@@ -5,8 +5,8 @@ using System.Text;
 
 namespace BAUERGROUP.Shared.Core.Utilities
 {
-    public class OptionalOutParameter<Type>
+    public class OptionalOutParameter<T>
     {
-        public Type Result { get; set; }
+        public T? Result { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace BAUERGROUP.Shared.Core.Files
         }
 
         public FileChangesMonitor(String sFileName):
-            this(Path.GetDirectoryName(sFileName), Path.GetFileName(sFileName))
+            this(Path.GetDirectoryName(sFileName) ?? ".", Path.GetFileName(sFileName))
         {
 
         }

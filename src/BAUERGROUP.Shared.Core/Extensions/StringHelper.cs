@@ -35,7 +35,7 @@ namespace BAUERGROUP.Shared.Core.Extensions
             return WebUtility.HtmlDecode(sInput);
         }
 
-        public static String BinaryToString(this Byte[] bData, Encoding oEncoding = null)
+        public static String BinaryToString(this Byte[] bData, Encoding? oEncoding = null)
         {
             if (oEncoding == null)
                 oEncoding = new System.Text.UnicodeEncoding();
@@ -43,7 +43,7 @@ namespace BAUERGROUP.Shared.Core.Extensions
             return oEncoding.GetString(bData);
         }
 
-        public static Byte[] StringToBinary(this String sInput, Encoding oEncoding = null)
+        public static Byte[] StringToBinary(this String sInput, Encoding? oEncoding = null)
         {
             if (oEncoding == null)
                 oEncoding = new System.Text.UnicodeEncoding();

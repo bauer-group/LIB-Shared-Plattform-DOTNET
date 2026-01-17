@@ -20,7 +20,7 @@ namespace BAUERGROUP.Shared.Core.Application
         public static Int32 ProcessorCount { get { return Environment.ProcessorCount; } }
         public static String SystemDirectory { get { return Environment.SystemDirectory; } }
 
-        public static String GetEnvironmentVariable(String sName)
+        public static String? GetEnvironmentVariable(String sName)
         {
             //Returns NULL if not found
             return Environment.GetEnvironmentVariable(sName);

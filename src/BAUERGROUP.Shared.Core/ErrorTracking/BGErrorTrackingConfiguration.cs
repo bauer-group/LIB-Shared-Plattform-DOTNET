@@ -44,7 +44,7 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
         /// <summary>
         /// Sentry DSN (Data Source Name)
         /// </summary>
-        public string Dsn { get; set; }
+        public string? Dsn { get; set; }
 
         /// <summary>
         /// Anwendungsname (automatisch ermittelt)
@@ -54,12 +54,12 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
         /// <summary>
         /// Release Version (z.B. "MyApp@1.0.0")
         /// </summary>
-        public string Release { get; set; }
+        public string? Release { get; set; }
 
         /// <summary>
         /// Umgebung: production, development, staging, etc.
         /// </summary>
-        public string Environment { get; set; }
+        public string? Environment { get; set; }
 
         /// <summary>
         /// Debug-Modus für Sentry SDK
@@ -97,7 +97,7 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
         /// <summary>
         /// Zusätzliche Tags die bei jedem Event mitgesendet werden
         /// </summary>
-        public Action<System.Collections.Generic.IDictionary<string, string>> ConfigureTags { get; set; }
+        public Action<System.Collections.Generic.IDictionary<string, string>>? ConfigureTags { get; set; }
     }
 
     /// <summary>

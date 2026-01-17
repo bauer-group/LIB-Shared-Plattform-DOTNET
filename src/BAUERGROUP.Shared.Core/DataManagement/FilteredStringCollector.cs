@@ -10,9 +10,9 @@ namespace BAUERGROUP.Shared.Core.DataManagement
     {
         private HashSet<String> _RecordsRead;
 
-        private String FilterRegExPattern { get; set; }
+        private String? FilterRegExPattern { get; set; }
 
-        public FilteredStringCollector(String sFilterRegEx = null)
+        public FilteredStringCollector(String? sFilterRegEx = null)
         {
             _RecordsRead = new HashSet<String>();
             FilterRegExPattern = sFilterRegEx;
@@ -36,13 +36,13 @@ namespace BAUERGROUP.Shared.Core.DataManagement
 
         public Int32 AllRecordsCount => _RecordsRead.Count;
         public IEnumerable<String> AllRecords => _RecordsRead;
-        public String FirstRecord => AllRecords.FirstOrDefault();
-        public String LastRecord => AllRecords.LastOrDefault();
+        public String? FirstRecord => AllRecords.FirstOrDefault();
+        public String? LastRecord => AllRecords.LastOrDefault();
 
         public Int32 MatchingRecordsCount => (FilterRegExPattern == null) ? _RecordsRead.Count() : _RecordsRead.Count(p => Regex.IsMatch(p, FilterRegExPattern));
         public IEnumerable<String> MatchingRecords => (FilterRegExPattern == null) ? _RecordsRead : _RecordsRead.Where(p => Regex.IsMatch(p, FilterRegExPattern));
-        public String FirstMatchingRecord => MatchingRecords.FirstOrDefault();
-        public String LastMatchingRecord => MatchingRecords.LastOrDefault();
+        public String? FirstMatchingRecord => MatchingRecords.FirstOrDefault();
+        public String? LastMatchingRecord => MatchingRecords.LastOrDefault();
 
         public Boolean Contains(String sEntry)
         {
@@ -55,7 +55,7 @@ namespace BAUERGROUP.Shared.Core.DataManagement
             _RecordsRead.TrimExcess();
         }
 
-        public event EventHandler<FilteredStringCollectorEventArgs> RecordAdded;
+        public event EventHandler<FilteredStringCollectorEventArgs>? RecordAdded;
 
         protected void OnRecordAdded(FilteredStringCollectorEventArgs eventArgs) => RecordAdded?.Invoke(this, eventArgs);
 

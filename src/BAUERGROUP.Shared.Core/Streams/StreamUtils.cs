@@ -31,9 +31,10 @@ namespace BAUERGROUP.Shared.Core.Streams
             return fileBytes;
         }
 
-        public static Stream GetRessourceAsStream(String sRessource, Type oType, String sRessourcePath = @"Resources")
+        public static Stream? GetRessourceAsStream(String sRessource, Type oType, String sRessourcePath = @"Resources")
         {
             var oAssembly = Assembly.GetAssembly(oType);
+            if (oAssembly == null) return null;
             var sRessourceName = String.Format(@"{0}.{1}.{2}", oAssembly.GetName().Name, sRessourcePath, sRessource);
 
             return oAssembly.GetManifestResourceStream(sRessourceName);

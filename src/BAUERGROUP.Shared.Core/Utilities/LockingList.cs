@@ -9,7 +9,7 @@ namespace BAUERGROUP.Shared.Core.Utilities
     public class LockingList<T> : IDisposable where T : new()
     {
         private MemoryCache _mc;
-        public event EventHandler Updated;
+        public event EventHandler? Updated;
 
         public LockingList(String sName)
         {
@@ -44,17 +44,17 @@ namespace BAUERGROUP.Shared.Core.Utilities
             return _mc.Contains(sCode);
         }
 
-        public T Get(String sCode)
+        public T? Get(String sCode)
         {
-            return ((T)_mc.Get(sCode));
+            return ((T?)_mc.Get(sCode));
         }
 
-        public T Remove(String sCode)
+        public T? Remove(String sCode)
         {
-            T oResult = default(T);
+            T? oResult = default;
 
             if (IsExists(sCode))
-                oResult = (T)_mc.Remove(sCode);
+                oResult = (T?)_mc.Remove(sCode);
 
             UpdatedListEvent();
             return oResult;

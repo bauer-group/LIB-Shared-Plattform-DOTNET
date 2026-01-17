@@ -14,7 +14,7 @@ namespace BAUERGROUP.Shared.Core.Logging
     {
         private CancellationTokenSource _cts;
 
-        public BGLoggerNetworkListener(Boolean bAutomaticEnableSenderOnLocalHost = false, IPAddress oAddress = null, UInt16 uPort = 0)
+        public BGLoggerNetworkListener(Boolean bAutomaticEnableSenderOnLocalHost = false, IPAddress? oAddress = null, UInt16 uPort = 0)
         {
             _cts = new CancellationTokenSource();
 

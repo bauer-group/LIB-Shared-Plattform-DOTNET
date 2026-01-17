@@ -27,7 +27,7 @@ namespace BAUERGROUP.Shared.Core.Extensions
             return stringBuilder.ToString();
         }
 
-        public static String GetMD5Hash(this String sInput, Encoding oEncoding = null)
+        public static String GetMD5Hash(this String sInput, Encoding? oEncoding = null)
         {
             //Convert the input string to a byte array and compute the hash.
             Byte[] hashBytes = MD5.Create().ComputeHash(oEncoding == null ? Encoding.ASCII.GetBytes(sInput) : oEncoding.GetBytes(sInput));

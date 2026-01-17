@@ -20,7 +20,7 @@ public class ApplicationConfigurationStoreXML<T> : IApplicationConfigurationStor
     /// <param name="fileName">The configuration file path. If null, uses default location.</param>
     public ApplicationConfigurationStoreXML(string? fileName = null)
     {
-        _fileName = string.IsNullOrEmpty(fileName) ? DefaultConfigurationFilename : fileName;
+        _fileName = fileName ?? DefaultConfigurationFilename;
     }
 
     /// <summary>

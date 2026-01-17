@@ -47,7 +47,7 @@ namespace BAUERGROUP.Shared.Core.Configuration
                 }
             }
 
-            return Type.GetType(String.Format("{0}, {1}", sCleanTypeName, sCleanAssemblyName));
+            return Type.GetType(String.Format("{0}, {1}", sCleanTypeName, sCleanAssemblyName))!;
         }
     }
 }

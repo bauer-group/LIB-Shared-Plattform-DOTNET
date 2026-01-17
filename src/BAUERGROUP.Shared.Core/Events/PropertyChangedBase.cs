@@ -10,7 +10,7 @@ namespace BAUERGROUP.Shared.Core.Events
     public class PropertyChangedBase : INotifyPropertyChanged
     {
         #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         
         protected void OnPropertyChanged(String sName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(sName));
         #endregion
