@@ -1,6 +1,6 @@
-using BAUERGROUP.Shared.Desktop.Files;
+using BAUERGROUP.Shared.Core.Files;
 
-namespace BAUERGROUP.Shared.Plattform.Test.Desktop;
+namespace BAUERGROUP.Shared.Plattform.Test.Core;
 
 public class MimeTypeSnifferTests
 {
