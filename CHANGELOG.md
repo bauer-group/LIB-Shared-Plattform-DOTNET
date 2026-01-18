@@ -1,3 +1,9 @@
+## [2.2.0](https://github.com/bauer-group/LIB-Shared-Plattform-NET/compare/v2.1.9...v2.2.0) (2026-01-18)
+
+### 🚀 Features
+
+* XML doc to be released ([d463d88](https://github.com/bauer-group/LIB-Shared-Plattform-NET/commit/d463d8829cdcadd655fb5cb9fa6b8379efe0e477))
+
 ## [2.1.9](https://github.com/bauer-group/LIB-Shared-Plattform-NET/compare/v2.1.8...v2.1.9) (2026-01-17)
 
 ### ♻️ Refactoring
