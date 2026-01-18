@@ -36,7 +36,7 @@
     <PackageVersion Include="System.Reactive" Version="6.1.0" />
     <PackageVersion Include="ReactiveUI" Version="20.1.63" />
     <PackageVersion Include="Splat" Version="15.2.22" />
-    <PackageVersion Include="Splat.NLog" Version="15.2.22" />
+    <PackageVersion Include="Splat.NLog" Version="19.2.1" />
     <!-- Windows Desktop (WPF/WinForms) -->
     <PackageVersion Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
     <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.3650.58" />
