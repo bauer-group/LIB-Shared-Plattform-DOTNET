@@ -119,9 +119,8 @@ namespace BAUERGROUP.Shared.Core.ErrorTracking
 
         private static BreadcrumbLevel MapToBreadcrumbLevel(LogLevel level)
         {
-            if (level == LogLevel.Fatal)
-                return BreadcrumbLevel.Critical;
-            if (level == LogLevel.Error)
+            // Sentry 5.x removed BreadcrumbLevel.Critical - Fatal maps to Error
+            if (level == LogLevel.Fatal || level == LogLevel.Error)
                 return BreadcrumbLevel.Error;
             if (level == LogLevel.Warn)
                 return BreadcrumbLevel.Warning;
