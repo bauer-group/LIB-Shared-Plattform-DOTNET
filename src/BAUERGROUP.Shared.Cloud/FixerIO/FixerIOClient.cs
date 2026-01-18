@@ -10,17 +10,40 @@ using System.Threading.Tasks;
 
 namespace BAUERGROUP.Shared.Cloud.FixerIO
 {
+    /// <summary>
+    /// Client for accessing the Fixer.io foreign exchange rates API.
+    /// </summary>
+    /// <remarks>
+    /// Provides methods to retrieve currency symbols, latest exchange rates, and historical rates.
+    /// API documentation: https://fixer.io/documentation
+    /// </remarks>
     public class FixerIOClient : IDisposable
     {
+        /// <summary>
+        /// Gets the configuration settings for the Fixer.io client.
+        /// </summary>
         protected FixerIOConfiguration Configuration { get; private set; }
+
+        /// <summary>
+        /// Gets the underlying REST client instance.
+        /// </summary>
         protected RestClient Client { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FixerIOClient"/> class with the specified API key.
+        /// </summary>
+        /// <param name="apiKey">The Fixer.io API key.</param>
         public FixerIOClient(String apiKey) :
             this (new FixerIOConfiguration(apiKey))
         {
 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FixerIOClient"/> class with the specified configuration.
+        /// </summary>
+        /// <param name="configuration">The configuration containing API key and connection settings.</param>
+        /// <exception cref="FixerIOClientException">Thrown when the API URL is invalid.</exception>
         public FixerIOClient(FixerIOConfiguration configuration)
         {
             Configuration = configuration;
@@ -68,6 +91,9 @@ namespace BAUERGROUP.Shared.Cloud.FixerIO
             return $"{name} - v{version}";
         }
 
+        /// <summary>
+        /// Releases all resources used by the <see cref="FixerIOClient"/>.
+        /// </summary>
         public void Dispose()
         {
             Client.Dispose();
@@ -99,21 +125,44 @@ namespace BAUERGROUP.Shared.Cloud.FixerIO
             });
         }
 
+        /// <summary>
+        /// Retrieves all available currency symbols and their names.
+        /// </summary>
+        /// <returns>A data object containing a dictionary of currency codes and names.</returns>
+        /// <exception cref="FixerIOClientException">Thrown when the API request fails.</exception>
         public async Task<FixerIODataSymbols?> GetSymbols()
         {
             return await Get<FixerIODataSymbols>("symbols");
         }
 
+        /// <summary>
+        /// Retrieves the latest exchange rates with EUR as the base currency.
+        /// </summary>
+        /// <returns>A data object containing current exchange rates.</returns>
+        /// <exception cref="FixerIOClientException">Thrown when the API request fails.</exception>
         public async Task<FixerIODataRates?> GetLatestRates()
         {
             return await Get<FixerIODataRates>("latest");
         }
 
+        /// <summary>
+        /// Retrieves the latest exchange rates for a specific base currency.
+        /// </summary>
+        /// <param name="baseCurrency">The base currency code (e.g., "USD", "GBP").</param>
+        /// <returns>A data object containing current exchange rates relative to the base currency.</returns>
+        /// <exception cref="FixerIOClientException">Thrown when the API request fails.</exception>
         public async Task<FixerIODataRates?> GetLatestRates(String baseCurrency)
         {
             return await Get<FixerIODataRates>("latest", Parameter.CreateParameter("base", baseCurrency, ParameterType.GetOrPost));
         }
 
+        /// <summary>
+        /// Retrieves historical exchange rates for a specific date.
+        /// </summary>
+        /// <param name="date">The date for which to retrieve exchange rates.</param>
+        /// <param name="baseCurrency">Optional base currency code. Defaults to EUR if not specified.</param>
+        /// <returns>A data object containing historical exchange rates for the specified date.</returns>
+        /// <exception cref="FixerIOClientException">Thrown when the API request fails.</exception>
         public async Task<FixerIODataRates?> GetHistoricalRates(DateTime date, String? baseCurrency = null)
         {
             if (baseCurrency == null)
