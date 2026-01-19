@@ -1,3 +1,13 @@
+## [3.0.0](https://github.com/bauer-group/LIB-Shared-Plattform-NET/compare/v2.3.0...v3.0.0) (2026-01-19)
+
+### ⚠ BREAKING CHANGES
+
+* Public Release 3.0.0
+
+### 🔧 Chores
+
+* Public Release 3.0.0 ([e41e7c9](https://github.com/bauer-group/LIB-Shared-Plattform-NET/commit/e41e7c91498e10dff0a6e64bfe11c48c23226913))
+
 ## [2.3.0](https://github.com/bauer-group/LIB-Shared-Plattform-NET/compare/v2.2.0...v2.3.0) (2026-01-18)
 
 ### 🚀 Features
