@@ -1,3 +1,9 @@
+## [3.0.1](https://github.com/bauer-group/LIB-Shared-Plattform-NET/compare/v3.0.0...v3.0.1) (2026-01-28)
+
+### 🐛 Bug Fixes
+
+* Generic API service clients was missing ([1b16a51](https://github.com/bauer-group/LIB-Shared-Plattform-NET/commit/1b16a51506ee251e5ce73b3e968861697360cc21))
+
 ## [3.0.0](https://github.com/bauer-group/LIB-Shared-Plattform-NET/compare/v2.3.0...v3.0.0) (2026-01-19)
 
 ### ⚠ BREAKING CHANGES
