@@ -108,19 +108,6 @@ var connection = SQLiteConnectionFactory.CreateConnection(
 // Use with your preferred ORM or raw SQL
 ```
 
-### Shopify Integration
-
-```csharp
-using BAUERGROUP.Shared.API.Shopify;
-
-var client = new ShopifyClient(
-    shopUrl: "mystore.myshopify.com",
-    accessToken: "your-access-token"
-);
-
-var orders = await client.GetOrdersAsync();
-```
-
 ### Embedded Browser (WPF)
 
 ```csharp
