@@ -1,0 +1,66 @@
+<Project>
+  <PropertyGroup>
+    <!--
+      Target Frameworks - defined in individual *.csproj files for multi-targeting:
+      - Core, API, Data: net10.0;net8.0;netstandard2.0
+      - Cloud: net10.0;net8.0 (uses modern APIs not available in netstandard2.0)
+      - Desktop, Desktop.Browser, Desktop.Reporting: net10.0-windows;net8.0-windows
+    -->
+    <!-- <TargetFramework>net10.0</TargetFramework> -->
+    <!-- Versioning (managed by CI/CD) -->
+    <Version>3.0.2</Version>
+    <!-- Language & Compiler Settings -->
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <!-- Enable Windows targeting from Linux (for CI/CD) -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <!-- Assembly Info -->
+    <Authors>BAUER GROUP Development Team</Authors>
+    <Company>BAUER GROUP</Company>
+    <Copyright>Copyright ©2003-2026 BAUER GROUP</Copyright>
+    <Product>BAUER GROUP Shared Components</Product>
+    <Description>Library for BAUER GROUP Shared Components for .NET. This Component is a Part of our Enterprise Business Framework.</Description>
+    <!-- NuGet Package Metadata -->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/bauer-group/LIB-Shared-Plattform-NET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/bauer-group/LIB-Shared-Plattform-NET</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <!-- Assembly Signing -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)build\BAUERGROUP.Shared.snk</AssemblyOriginatorKeyFile>
+    <!-- Build Configuration -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591;NETSDK1206</NoWarn>
+    <!-- Central Package Management -->
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!-- Source Link for better debugging -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <!-- Deterministic builds for reproducibility -->
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+  <!-- Shared Icons and Assets -->
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)assets\ApplicationIcon.png" Pack="true" PackagePath="\" Link="ApplicationIcon.png" Visible="false"/>
+    <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" Link="README.md" Condition="Exists('$(MSBuildThisFileDirectory)README.md')"/>
+  </ItemGroup>
+  <PropertyGroup>
+    <PackageIcon>ApplicationIcon.png</PackageIcon>
+    <ApplicationIcon>$(MSBuildThisFileDirectory)assets\Application.ico</ApplicationIcon>
+  </PropertyGroup>
+  <!-- Source Link -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All"/>
+  </ItemGroup>
+  <!-- Polyfills for netstandard2.0 compatibility (PolySharp generates source code) -->
+  <ItemGroup>
+    <PackageReference Include="PolySharp" PrivateAssets="All">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>
